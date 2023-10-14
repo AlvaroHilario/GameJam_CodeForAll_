@@ -16,7 +16,7 @@ public class Grid { //Maybe we could extend from Rectangle
     public Grid(){
         this.grid = new Rectangle(PADDING,PADDING, getWidth(), getHeight());
 
-        Picture newpic = new Picture(PADDING, PADDING, "C:\\Users\\Alexandre\\Desktop\\AcademiaDeCodigo\\GameTests\\Cross4All\\src\\resources\\fMap.png");
+        Picture newpic = new Picture(PADDING, PADDING, "src/resources/fMap.png");
         newpic.grow(getWidth(),getHeight());
         newpic.translate(getWidth(), getHeight());
         newpic.draw();
