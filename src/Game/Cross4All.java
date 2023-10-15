@@ -21,7 +21,7 @@ public class Cross4All implements Game{
     public void run(){
 
 
-        while(true){
+        while(true){ //Todo create game loop logic
 
             if(cars.size() < 5)
                 CarFactory.generateCar(cars);
