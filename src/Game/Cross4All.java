@@ -18,13 +18,12 @@ public class Cross4All implements Game {
         this.grid = new Grid();
         this.cars = new LinkedList<>();
         this.player = new Player();
+        player.getPlayerController().keyboardInit();
     }
 
     public void run() {
 
         while (true) { //Todo create game loop logic
-
-            player.getPlayerController().keyboardInit();
 
             if (cars.size() < 5) {
                 CarFactory.generateCar(cars);
