@@ -7,13 +7,14 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class Car extends BaseActor {
 
     private Picture carPic;
-    public Car(){
-        super(48, 3);
-        this.carPic = new Picture(pos.getX(), pos.getY(), "src/resources/car.png");
-        this.carPic.grow((Grid.CELLSIZE * Grid.SCALE) + Grid.PADDING, (Grid.CELLSIZE * Grid.SCALE) + Grid.PADDING);
-        //this.carPic.translate((pos.getX() * Grid.SCALE), pos.getY() * Grid.SCALE);
-        this.carPic.draw();
+    public Car(int startCol, int startRow, String carImage){
+        super(startCol, startRow); //Our cars occupy 3x2 cols X rows
+        this.carPic = new Picture(super.getX(), super.getY(), carImage);
+        showCar();
+    }
 
+    public void showCar(){
+        this.carPic.draw();
     }
 
     public void move(){
@@ -26,5 +27,20 @@ public class Car extends BaseActor {
 
     public void deleteCar(){
         this.carPic.delete();
+    }
+
+    /* Only returns the X/Horizontal distance*/
+    public float getXDistance(Car car){
+        return Math.abs(this.carPic.getX() - car.carPic.getX());
+    }
+
+    @Override
+    public int getX() {
+        return carPic.getX();
+    }
+
+    @Override
+    public int getY() {
+        return carPic.getY();
     }
 }

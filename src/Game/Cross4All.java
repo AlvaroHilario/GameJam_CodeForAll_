@@ -22,7 +22,7 @@ public class Cross4All implements Game{
 
         while(true){
 
-            if(cars.size() < 1)
+            if(cars.size() < 5)
                 CarFactory.generateCar(cars);
 
             for(int i = 0; i < cars.size(); i++){
