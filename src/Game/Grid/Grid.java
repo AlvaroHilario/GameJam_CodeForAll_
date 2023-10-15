@@ -7,20 +7,14 @@ import java.awt.*;
 
 /** Main grid, where we will place our objects */
 public class Grid { //Maybe we could extend from Rectangle
-    private Rectangle grid;
+    private Picture background;
     public static final int PADDING = 10;
-    public static final int CELLSIZE = 8;
+    public static final int CELLSIZE = 16;
     public static final int COLS = 32;
     public static final int ROWS = 24;
-    public static final int SCALE = 2;
     public Grid(){
-        this.grid = new Rectangle(PADDING,PADDING, getWidth(), getHeight());
-
-        Picture newpic = new Picture(PADDING, PADDING, "src/resources/fMap.png");
-        newpic.grow(getWidth(),getHeight());
-        newpic.translate(getWidth(), getHeight());
-        newpic.draw();
-        this.grid.draw();
+        this.background = new Picture(PADDING, PADDING, "src/resources/fMap.png");
+        this.background.draw();
     }
 
     public int getCols() {
@@ -32,11 +26,11 @@ public class Grid { //Maybe we could extend from Rectangle
     }
 
     public int getWidth(){
-        return (CELLSIZE * SCALE * COLS) + PADDING;
+        return (CELLSIZE * COLS) + PADDING;
     }
 
     public int getHeight(){
-        return (CELLSIZE * SCALE * ROWS) + PADDING;
+        return (CELLSIZE * ROWS) + PADDING;
     }
 
     private int getScreenWidth(){
