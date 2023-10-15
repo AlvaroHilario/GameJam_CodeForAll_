@@ -21,13 +21,15 @@ public class Cross4All implements Game{
     public void run(){
 
 
-        while(true){
+        while(true){ //Todo create game loop logic
 
             if(cars.size() < 5)
                 CarFactory.generateCar(cars);
 
             for(int i = 0; i < cars.size(); i++){
-                if(cars.get(i).getCarPic().getX() < Grid.PADDING) {
+
+                //FIXME the car going to the right -> is pushing the window direction
+                if(cars.get(i).getCarPic().getX() < Grid.PADDING || cars.get(i).getCarPic().getX() + cars.get(i).getCarPic().getWidth()  > this.grid.getWidth()) {
                     cars.get(i).deleteCar();
                     cars.remove(i);
                 }

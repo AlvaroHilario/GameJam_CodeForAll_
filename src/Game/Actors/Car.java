@@ -1,14 +1,17 @@
 package Game.Actors;
 
-import Game.Grid.Grid;
+import Game.MovementDir;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /** Used to create a car */
 public class Car extends BaseActor {
 
     private Picture carPic;
-    public Car(int startCol, int startRow, String carImage){
+    private MovementDir moveDir;
+
+    public Car(int startCol, int startRow, String carImage, MovementDir moveDir){
         super(startCol, startRow); //Our cars occupy 3x2 cols X rows
+        this.moveDir = moveDir;
         this.carPic = new Picture(super.getX(), super.getY(), carImage);
         showCar();
     }
@@ -18,7 +21,12 @@ public class Car extends BaseActor {
     }
 
     public void move(){
-        this.carPic.translate(4 * -1, 0);
+
+        //Todo just a draft implementation
+        if(MovementDir.LEFT.equals(moveDir))
+            this.carPic.translate(4 * -1, 0);
+        else
+            this.carPic.translate(4, 0);
     }
 
     public Picture getCarPic() {
