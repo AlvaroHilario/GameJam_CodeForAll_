@@ -20,6 +20,7 @@ public class Cross4All implements Game{
 
     public void run(){
 
+
         while(true){
 
             if(cars.size() < 5)
