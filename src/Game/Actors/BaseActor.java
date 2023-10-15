@@ -9,9 +9,9 @@ public abstract class BaseActor { //Todo review the functionality in this class
     private int x,y;
     protected int colPos,rowPos;
     private Shape shapeObj;
-    //Todo private CollisionBox collisionBox;
+    //Todo private CollisionBox[] collisionBoxes;
 
-    BaseActor(int col, int row){
+    protected BaseActor(int col, int row){
         this.colPos = col;
         this.rowPos = row;
         setX();
@@ -20,6 +20,10 @@ public abstract class BaseActor { //Todo review the functionality in this class
 
     private void setX(){
         x = Util.getColX(colPos);
+    }
+
+    protected void move(){
+
     }
 
     private void setY(){
@@ -51,7 +55,4 @@ public abstract class BaseActor { //Todo review the functionality in this class
     public int getRowPos() {
         return rowPos;
     }
-
-
-
 }
