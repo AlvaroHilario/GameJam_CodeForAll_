@@ -1,5 +1,6 @@
 package Game.Grid;
 
+import Game.CarFactory;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -15,6 +16,8 @@ public class Grid { //Maybe we could extend from Rectangle
     public Grid(){
         this.background = new Picture(PADDING, PADDING, "src/resources/fMap.png");
         this.background.draw();
+
+        //CarFactory.generateStartRows(this); //Testing
     }
 
     public int getCols() {
@@ -27,6 +30,10 @@ public class Grid { //Maybe we could extend from Rectangle
 
     public int getWidth(){
         return (CELLSIZE * COLS) + PADDING;
+    }
+
+    public Picture getBackground() {
+        return background;
     }
 
     public int getHeight(){
