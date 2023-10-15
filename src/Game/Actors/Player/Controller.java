@@ -5,8 +5,10 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
-/** Used to handle the input*/
-public class Controller  implements KeyboardHandler {
+/**
+ * Used to handle the input
+ */
+public class Controller implements KeyboardHandler {
 
     public void keyboardInit() {
         Keyboard keyboard = new Keyboard(this);
@@ -35,7 +37,20 @@ public class Controller  implements KeyboardHandler {
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-
+        switch (keyboardEvent.getKey()) {
+            case KeyboardEvent.KEY_LEFT:
+                Player.moveLeft();
+                break;
+            case KeyboardEvent.KEY_RIGHT:
+                Player.moveRight();
+                break;
+            case KeyboardEvent.KEY_UP:
+                Player.moveUp();
+                break;
+            case KeyboardEvent.KEY_DOWN:
+                Player.moveDown();
+                break;
+        }
     }
 
     @Override

@@ -8,19 +8,57 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.awt.*;
 
-/** Used to create our main player */
+/**
+ * Used to create our main player
+ */
 public class Player extends BaseActor {
 
-    private Rectangle playerPic;
+    private static Picture playerPic;
+    private final Controller playerController;
 
-    public Player(){
+    public Player() {
         super(48, 3);
-        // rectangle for now
-        this.playerPic = new Rectangle(10,10,50, 50);
-        this.playerPic.setColor(Color.RED);
-        this.playerPic.fill();
-
-
+        this.playerController = new Controller();
+        showPlayer();
     }
-    private Controller playerController;
+
+    private void showPlayer() {
+        int yInitialPosition = 362;
+        int xInitialPosition = 250;
+        String playerImage = getImagePlayer();
+        playerPic = new Picture(xInitialPosition, yInitialPosition, playerImage);
+        playerPic.draw();
+    }
+
+    public Controller getPlayerController() {
+        return playerController;
+    }
+
+    public String getImagePlayer() {
+        return "src/resources/player.png";
+    }
+
+    public static void moveUp() {
+        if (playerPic.getY() > Grid.PADDING) {
+            playerPic.translate(0, -16);
+        }
+    }
+
+    public static void moveDown() {
+        if (playerPic.getY() + playerPic.getHeight() < Grid.getHeight()) {
+            playerPic.translate(0, 16);
+        }
+    }
+
+    public static void moveLeft() {
+        if (playerPic.getX() > Grid.PADDING) {
+            playerPic.translate(-16, 0);
+        }
+    }
+
+    public static void moveRight() {
+        if (playerPic.getX() + playerPic.getWidth() < Grid.getWidth()) {
+            playerPic.translate(16, 0);
+        }
+    }
 }
