@@ -23,8 +23,4 @@ public class Player extends BaseActor {
 
     }
     private Controller playerController;
-
-    public Player(){
-        this.playerController = new Controller();
-    }
 }
