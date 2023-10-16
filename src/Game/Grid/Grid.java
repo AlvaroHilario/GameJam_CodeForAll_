@@ -14,10 +14,8 @@ public class Grid { //Maybe we could extend from Rectangle
     public static final int COLS = 32;
     public static final int ROWS = 24;
     public Grid(){
-        this.background = new Picture(PADDING, PADDING, "src/resources/fMap.png");
+        this.background = new Picture(PADDING, PADDING, "src/resources/fMapGrid.png");
         this.background.draw();
-
-        //CarFactory.generateStartRows(this); //Testing
     }
 
     public int getCols() {
