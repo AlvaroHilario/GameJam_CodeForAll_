@@ -6,7 +6,9 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.awt.*;
 
-/** Main grid, where we will place our objects */
+/**
+ * Main grid, where we will place our objects
+ */
 public class Grid { //Maybe we could extend from Rectangle
     private Picture background;
     public static final int PADDING = 10;
@@ -26,7 +28,7 @@ public class Grid { //Maybe we could extend from Rectangle
         return ROWS;
     }
 
-    public int getWidth(){
+    public static int getWidth() {
         return (CELLSIZE * COLS) + PADDING;
     }
 
@@ -34,19 +36,19 @@ public class Grid { //Maybe we could extend from Rectangle
         return background;
     }
 
-    public int getHeight(){
+    public static int getHeight() {
         return (CELLSIZE * ROWS) + PADDING;
     }
 
-    private int getScreenWidth(){
+    private int getScreenWidth() {
         return Toolkit.getDefaultToolkit().getScreenSize().width;
     }
 
-    private int getScreenHeight(){
+    private int getScreenHeight() {
         return Toolkit.getDefaultToolkit().getScreenSize().height;
     }
 
-    private int getCellSize(){
-        return this.CELLSIZE;
+    private int getCellSize() {
+        return CELLSIZE;
     }
 }
