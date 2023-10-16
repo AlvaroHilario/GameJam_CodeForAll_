@@ -1,9 +1,7 @@
 package Game;
 
+import Game.Actors.BaseActor;
 import Game.Actors.Car;
-import Game.Grid.Grid;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
 
@@ -22,7 +20,7 @@ public class CarFactory {
         //Todo this is a bad implementation
         Lanes randomLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)]; //Generates a random lane position
 
-        for(Car c : cars){
+        for(BaseActor c : cars){
 
             int what = Util.getColX(randomLane.getStartCol());
             float distanceX = Util.getDistance(c.getX() , Util.getColX(randomLane.getStartCol()));

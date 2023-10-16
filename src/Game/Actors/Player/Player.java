@@ -23,4 +23,9 @@ public class Player extends BaseActor {
 
     }
     private Controller playerController;
+
+    @Override
+    public void move() {
+
+    }
 }

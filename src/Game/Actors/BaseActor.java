@@ -22,9 +22,7 @@ public abstract class BaseActor { //Todo review the functionality in this class
         x = Util.getColX(colPos);
     }
 
-    protected void move(){
-
-    }
+    public abstract void move();
 
     private void setY(){
         y = Util.getRowY(rowPos);
