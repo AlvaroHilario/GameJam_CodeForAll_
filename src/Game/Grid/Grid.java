@@ -15,12 +15,9 @@ public class Grid { //Maybe we could extend from Rectangle
     public static final int CELLSIZE = 16;
     public static final int COLS = 32;
     public static final int ROWS = 24;
-
-    public Grid() {
-        this.background = new Picture(PADDING, PADDING, "src/resources/fMap.png");
+    public Grid(){
+        this.background = new Picture(PADDING, PADDING, "src/resources/fMapGrid.png");
         this.background.draw();
-
-        //CarFactory.generateStartRows(this); //Testing
     }
 
     public int getCols() {
