@@ -9,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Main game logic
  */
-public class Cross4All implements Game {
+public class Cross4All {
     private final Grid grid;
     private final Player player;
     private final LinkedList<Car> cars;
@@ -23,13 +23,10 @@ public class Cross4All implements Game {
 
     public void run() {
 
-        while (true) { //Todo create game loop logic
+        while(true) { //Todo create game loop logic
 
-        while(true){ //Todo create game loop logic
-
-            if(cars.size() < 20)
+            if (cars.size() < 20)
                 CarFactory.generateCar(cars);
-            }
 
             for (int i = 0; i < cars.size(); i++) {
 
@@ -45,7 +42,7 @@ public class Cross4All implements Game {
                 car.move();
             }
 
-            try {
+            try {//Todo move to the main class
                 Thread.sleep(25);
             } catch (Exception e) {
                 System.out.println("Add exception");
@@ -54,10 +51,10 @@ public class Cross4All implements Game {
     }
 
     private void updateCars() {
-
+        return;
     }
 
     private void updatePlayer() {
-
+        return;
     }
 }

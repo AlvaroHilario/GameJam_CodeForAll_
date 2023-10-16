@@ -21,6 +21,7 @@ public enum Lanes{
         return this.moveDir;
     }
 
+    /* Returns the starting column*/
     public int getStartCol(){
         int imageWidth = Util.getImageWidth(CarFactory.getCarImage(moveDir));
         return this.moveDir.equals(MovementDir.RIGHT) ? 0 :  Grid.COLS - (imageWidth / Grid.CELLSIZE);
