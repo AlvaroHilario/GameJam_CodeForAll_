@@ -10,7 +10,7 @@ import java.awt.*;
 public class Grid { //Maybe we could extend from Rectangle
     private Picture background;
     public static final int PADDING = 10;
-    public static final int CELLSIZE = 16;
+    public static final int CELLSIZE = 128;
     public static final int COLS = 32;
     public static final int ROWS = 24;
     public Grid(){
@@ -26,7 +26,7 @@ public class Grid { //Maybe we could extend from Rectangle
         return ROWS;
     }
 
-    public int getWidth(){
+    public static int getWidth(){
         return (CELLSIZE * COLS) + PADDING;
     }
 
@@ -34,7 +34,7 @@ public class Grid { //Maybe we could extend from Rectangle
         return background;
     }
 
-    public int getHeight(){
+    public static int getHeight(){
         return (CELLSIZE * ROWS) + PADDING;
     }
 

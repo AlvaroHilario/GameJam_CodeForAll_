@@ -17,7 +17,7 @@ public class IsoCar extends BaseActor {
             int[] isoCoords = Helper.toIso(startCol, startRow);
             int fx = isoCoords[0];//
             int fy = isoCoords[1];//
-            this.carPic = new Picture(fx, fy, "src/resources/isometric.png");
+            this.carPic = new Picture(fx, fy - 15, "src/resources/Roadster_64R.png");
             carPic.draw();
     }
 
@@ -28,12 +28,17 @@ public class IsoCar extends BaseActor {
     public void move(){
 
         int[] cenasOld = Helper.toIso(this.carPic.getX(), this.carPic.getY());
-        int[] cenas = Helper.toIso(this.carPic.getX(), this.carPic.getY()- 1);
+        int[] cenas = Helper.toIso(this.carPic.getX(), this.carPic.getY());
         int[] newCenas = new int[2];
         newCenas[0]= cenas[0] - cenasOld[0];
         newCenas[1]= cenas[1] - cenasOld[1];
 
-        this.carPic.translate(newCenas[0], newCenas[1]);
+
+
+        double xDiff = (double)(newCenas[0]) + 8.0f;
+        double yDiff = (double)(newCenas[1]) + 4.0f;
+
+        this.carPic.translate(xDiff, yDiff);
     }
 
     public Picture getCarPic() {

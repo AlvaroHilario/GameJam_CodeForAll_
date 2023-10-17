@@ -11,11 +11,10 @@ import java.awt.*;
 public class IsoGrid { //Maybe we could extend from Rectangle
     private Picture background;
     public static final int PADDING = 10;
-    public static final int CELLSIZE = 32;
-    public static final int COLS = 32;
-    public static final int ROWS = 32;
-    public int[][] world = new int[10][10];
-    private Picture[][] isoGrid;
+    public static final int CELLSIZE = 128;
+    public static final int COLS = 24;
+    public static final int ROWS = 24;
+    public Picture[][] isoGrid;
     public IsoGrid(){
         this.isoGrid = new Picture[COLS][ROWS];
 
@@ -24,7 +23,7 @@ public class IsoGrid { //Maybe we could extend from Rectangle
                     int[] isoCoords = Helper.toIso(x, y);
                     int fx = isoCoords[0];//
                     int fy = isoCoords[1];//
-                    isoGrid[x][y] = new Picture(fx, fy, "src/resources/isoprite.png");
+                    isoGrid[x][y] = new Picture(fx, fy, "src/resources/grass.png");
                     isoGrid[x][y].draw();
                 }
             }

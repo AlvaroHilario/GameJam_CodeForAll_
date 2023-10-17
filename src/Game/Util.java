@@ -1,6 +1,7 @@
 package Game;
 
 import Game.Grid.Grid;
+import Game.Isometric.Helper;
 import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -40,6 +41,44 @@ public class Util {
 
     public static float getDistance2D(Shape objOne, Shape objTwo){
         return (float)Math.sqrt(Math.pow(objTwo.getX() - objOne.getX(), 2) - Math.pow(objTwo.getY() - objOne.getY(), 2));
+    }
+
+    public static double[] translateMovement(Picture pic, MovementDir moveDir, double speed){
+
+        int[] cenasOld = Helper.toIso(pic.getX(), pic.getY());
+        int[] cenas = Helper.toIso(pic.getX(), pic.getY());
+        int[] newCenas = new int[2];
+        newCenas[0]= cenas[0] - cenasOld[0];
+        newCenas[1]= cenas[1] - cenasOld[1];
+
+        double speedX = speed / 2;
+        double speedY = speed / 4;
+
+        double[] diff = new double[2];
+        switch (moveDir){
+            case UP:
+                diff[0] = (double)(newCenas[0]) + speedX;
+                diff[1] = (double)(newCenas[1]) - speedY;
+                break;
+            case DOWN:
+                diff[0] = (double)(newCenas[0]) - speedX;
+                diff[1] = (double)(newCenas[1]) + speedY;
+                break;
+            case LEFT:
+                diff[0] = (double)(newCenas[0]) - speedX;
+                diff[1] = (double)(newCenas[1]) - speedY;
+                break;
+            case RIGHT:
+                diff[0] = (double)(newCenas[0]) + speedX;
+                diff[1] = (double)(newCenas[1]) + speedY;
+                break;
+            default:
+                diff[0] = 0;
+                diff[1] = 0;
+                break;
+        }
+
+        return diff;
     }
 
 }

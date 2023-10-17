@@ -3,8 +3,8 @@ package Game.Isometric;
 import java.util.Vector;
 
 public class Helper {
-    private static int TILE_WIDTH_HALF = IsoGrid.COLS/2;
-    private static int TILE_HEIGHT_HALF = IsoGrid.ROWS/2;
+    private static int TILE_WIDTH_HALF = 64/2; //ImageWidth
+    private static int TILE_HEIGHT_HALF = 64/2; //ImageHeight
 
     private static int TILE_WIDTH_QUARTER = TILE_WIDTH_HALF/2;
     private static int TILE_HEIGHT_QUARTER = TILE_HEIGHT_HALF/2;
@@ -15,7 +15,7 @@ public class Helper {
         int j = (x + y) * TILE_HEIGHT_QUARTER;
 
         i += 800-TILE_WIDTH_HALF;
-        j+=100;
+        j+=50;
 
         return new int[]{i,j};
     }
@@ -23,7 +23,7 @@ public class Helper {
     public static int[] toGrid(double i, double j){
 
         i-=800;
-        j-=100;
+        j-=50;
 
         double tx = Math.ceil(((i / TILE_WIDTH_HALF) + (j / TILE_HEIGHT_QUARTER))/2);
         double ty = Math.ceil(((j / TILE_HEIGHT_QUARTER) - (i / TILE_WIDTH_HALF))/2);
