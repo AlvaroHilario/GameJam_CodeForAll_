@@ -1,9 +1,12 @@
 package Game.Isometric;
 
+import Game.MovementDir;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+
 import java.util.Vector;
 
 public class Helper {
-    private static int TILE_WIDTH_HALF = 64/2; //ImageWidth
+    private static int TILE_WIDTH_HALF = 64/2; //ImageWidth estamos a usar 64x64 tiles
     private static int TILE_HEIGHT_HALF = 64/2; //ImageHeight
 
     private static int TILE_WIDTH_QUARTER = TILE_WIDTH_HALF/2;
@@ -32,5 +35,71 @@ public class Helper {
         int y = (int) Math.ceil(ty)-1;
 
         return new int[]{x, y};
+    }
+
+    public static double[] translateMovement(Picture pic, MovementDir moveDir, double speed){
+
+        int[] cenasOld = Helper.toIso(pic.getX(), pic.getY());
+        int[] cenas = Helper.toIso(pic.getX(), pic.getY());
+        int[] newCenas = new int[2];
+        newCenas[0]= cenas[0] - cenasOld[0];
+        newCenas[1]= cenas[1] - cenasOld[1];
+
+        double speedX = speed / 2;
+        double speedY = speed / 4;
+
+        double[] diff = new double[2];
+        switch (moveDir){
+            case UP:
+                diff[0] = (double)(newCenas[0]) + speedX;
+                diff[1] = (double)(newCenas[1]) - speedY;
+                break;
+            case DOWN:
+                diff[0] = (double)(newCenas[0]) - speedX;
+                diff[1] = (double)(newCenas[1]) + speedY;
+                break;
+            case LEFT:
+                diff[0] = (double)(newCenas[0]) - speedX;
+                diff[1] = (double)(newCenas[1]) - speedY;
+                break;
+            case RIGHT:
+                diff[0] = (double)(newCenas[0]) + speedX;
+                diff[1] = (double)(newCenas[1]) + speedY;
+                break;
+            default:
+                diff[0] = 0;
+                diff[1] = 0;
+                break;
+        }
+
+        return diff;
+    }
+
+    public static boolean gridLimitsRight(Picture pic){
+        int[] isoCoords = Helper.toIso(IsoGrid.COLS, IsoGrid.ROWS);
+        int[] gridPos = Helper.toGrid(pic.getX(), pic.getY());
+        int[] isoCoord2s = Helper.toIso((IsoGrid.COLS + IsoGrid.ROWS) - gridPos[0], 0);
+        return isoCoords[0] + isoCoords[1] < isoCoord2s[0];
+    }
+
+    public static boolean gridLimitsLeft(Picture pic){
+        int[] isoCoords = Helper.toIso(0, 0); // Assuming the leftmost grid coordinates are (0, 0)
+        int[] gridPos = Helper.toGrid(pic.getX() + pic.getWidth(), pic.getY() + 15);
+
+        return gridPos[0] > -1 && gridPos[1] > -1;
+    }
+
+    public static boolean gridLimitsDown(Picture pic){
+        int[] isoCoords = Helper.toIso(0, 24); // Assuming the leftmost grid coordinates are (0, 0)
+        int[] gridPos = Helper.toGrid(pic.getX(), pic.getY() + pic.getHeight());
+
+        return gridPos[0] > -1 && gridPos[1] < 24;
+    }
+
+    public static boolean gridLimitsUp(Picture pic){
+        int[] isoCoords = Helper.toIso(0, 0); // Assuming the leftmost grid coordinates are (0, 0)
+        int[] gridPos = Helper.toGrid(pic.getX(), pic.getY() - 10);
+
+        return gridPos[0] > -1 && gridPos[1] > -1;
     }
 }

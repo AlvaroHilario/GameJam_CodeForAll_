@@ -3,6 +3,7 @@ package Game.Actors.Player;
 import Game.Actors.BaseActor;
 import Game.Grid.Grid;
 import Game.Isometric.Helper;
+import Game.Isometric.IsoGrid;
 import Game.MovementDir;
 import Game.Util;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -44,42 +45,40 @@ public class Player extends BaseActor {
     }
 
     public static void moveUp() {
-        if (playerPic.getY() > Grid.PADDING) {
+        if (Helper.gridLimitsUp(playerPic)) {
 
-            double[] diff = Util.translateMovement(playerPic, MovementDir.UP, 80);
+            double[] diff = Helper.translateMovement(playerPic, MovementDir.UP, 8);
 
             playerPic.translate(diff[0], diff[1]);
         }
     }
 
     public static void moveDown() {
-        if (playerPic.getY() + playerPic.getHeight() < Grid.getHeight()) {
+        if (Helper.gridLimitsDown(playerPic)) {
 
 
-            double[] diff = Util.translateMovement(playerPic, MovementDir.DOWN,8);
+            double[] diff = Helper.translateMovement(playerPic, MovementDir.DOWN,8);
 
             playerPic.translate(diff[0], diff[1]);
         }
     }
 
     public static void moveLeft() {
-        if (playerPic.getX() > Grid.PADDING) {
-            double[] diff = Util.translateMovement(playerPic, MovementDir.LEFT, 8);
+        int[] isoCoords = Helper.toIso(0, 24);
+
+        System.out.println((playerPic.getX() + " : " + playerPic.getY()) + " : Coords " + isoCoords[0] + " : " + isoCoords[1]);
+
+        if(Helper.gridLimitsLeft(playerPic)) // Left limit
+        {
+            double[] diff = Helper.translateMovement(playerPic, MovementDir.LEFT, 8);
 
             playerPic.translate(diff[0], diff[1]);
         }
     }
 
     public static void moveRight() {
-        int[] isoCoords = Helper.toIso(24, 24);
-
-        int x =  Util.getColX(24);
-
-        int y = Util.getRowY(8);
-
-        if (playerPic.getX() + playerPic.getWidth() < isoCoords[0] && playerPic.getY() < x) {
-            double[] diff = Util.translateMovement(playerPic, MovementDir.RIGHT,8);
-
+        if(Helper.gridLimitsRight(playerPic)){
+            double[] diff = Helper.translateMovement(playerPic, MovementDir.RIGHT, 8);
             playerPic.translate(diff[0], diff[1]);
         }
     }

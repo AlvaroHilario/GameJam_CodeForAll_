@@ -1,14 +1,17 @@
 package Game;
 
 import Game.Grid.Grid;
+import Game.Isometric.IsoCar;
+import Game.Isometric.IsoGrid;
 
 public enum Lanes{
-    FIRST(3, MovementDir.LEFT),
-    SECOND(5, MovementDir.RIGHT),
-    THIRD(10, MovementDir.LEFT),
-    FOURTH(12, MovementDir.RIGHT),
-    FIFTH(17, MovementDir.LEFT),
-    SIXTH(19, MovementDir.RIGHT);
+    FIRST(4, MovementDir.LEFT),
+    SECOND(5, MovementDir.RIGHT);
+    /*
+    THIRD(8, MovementDir.LEFT),
+    FOURTH(9, MovementDir.RIGHT),
+    FIFTH(10, MovementDir.LEFT),
+    SIXTH(11, MovementDir.RIGHT);*/
 
     private final int rowNumber;
     private final MovementDir moveDir;
@@ -23,7 +26,7 @@ public enum Lanes{
 
     public int getStartCol(){
         int imageWidth = Util.getImageWidth(CarFactory.getCarImage(moveDir));
-        return this.moveDir.equals(MovementDir.RIGHT) ? 0 :  Grid.COLS - (imageWidth / Grid.CELLSIZE);
+        return this.moveDir.equals(MovementDir.RIGHT) ? 0 : IsoGrid.COLS;
     }
 
     Lanes(int rowNumber, MovementDir moveDir){

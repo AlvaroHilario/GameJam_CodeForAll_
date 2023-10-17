@@ -5,40 +5,37 @@ import Game.MovementDir;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /** Used to create a car */
-public class IsoCar extends BaseActor {
+public class IsoCar{
 
     private Picture carPic;
     private MovementDir moveDir;
+    private int savedStartRow;
 
-    public IsoCar(int startCol, int startRow){
-        super(startCol, startRow); //Our cars occupy 3x2 cols X rows
+    public IsoCar(int startCol, int startRow, MovementDir moveDir){
         this.moveDir = moveDir;
-
-            int[] isoCoords = Helper.toIso(startCol, startRow);
-            int fx = isoCoords[0];//
-            int fy = isoCoords[1];//
-            this.carPic = new Picture(fx, fy - 15, "src/resources/Roadster_64R.png");
-            carPic.draw();
+        this.savedStartRow = startRow;
+        int[] isoCoords = Helper.toIso(startCol, startRow);
+        int fx = isoCoords[0];//
+        int fy = isoCoords[1];//
+        this.carPic = new Picture(fx, fy + getImageOffset(), getCarImage());
+        carPic.draw();
     }
 
     public void showCar(){
         this.carPic.draw();
     }
 
+    private String getCarImage(){
+        return this.moveDir.equals(MovementDir.RIGHT) ? "src/resources/Roadster_64R.png" : "src/resources/Roadster_64L.png";
+    }
+
+    private int getImageOffset(){
+        return this.moveDir.equals(MovementDir.RIGHT) ? -25 : -15;
+    }
+
     public void move(){
-
-        int[] cenasOld = Helper.toIso(this.carPic.getX(), this.carPic.getY());
-        int[] cenas = Helper.toIso(this.carPic.getX(), this.carPic.getY());
-        int[] newCenas = new int[2];
-        newCenas[0]= cenas[0] - cenasOld[0];
-        newCenas[1]= cenas[1] - cenasOld[1];
-
-
-
-        double xDiff = (double)(newCenas[0]) + 8.0f;
-        double yDiff = (double)(newCenas[1]) + 4.0f;
-
-        this.carPic.translate(xDiff, yDiff);
+        double[] movement = this.moveDir.equals(MovementDir.RIGHT) ?  Helper.translateMovement(this.carPic, MovementDir.RIGHT, 25) : Helper.translateMovement(this.carPic, MovementDir.LEFT, 25);
+        this.carPic.translate(movement[0], movement[1]);
     }
 
     public Picture getCarPic() {
@@ -54,12 +51,19 @@ public class IsoCar extends BaseActor {
         return Math.abs(this.carPic.getX() - car.carPic.getX());
     }
 
-    @Override
+
     public int getX() {
         return carPic.getX();
     }
 
-    @Override
+    public MovementDir getMoveDir() {
+        return moveDir;
+    }
+
+    public int getSavedStartRow() {
+        return savedStartRow;
+    }
+
     public int getY() {
         return carPic.getY();
     }
