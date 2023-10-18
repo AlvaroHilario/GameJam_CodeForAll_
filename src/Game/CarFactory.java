@@ -43,11 +43,13 @@ public class CarFactory {
 
             int[] lanePos = Helper.toIso(randomLane.getStartCol(), randomLane.getStartCol());
 
-            double distanceXY = Math.sqrt(Math.pow(lanePos[0] - c.getCarPic().getX(), 2) + Math.pow(lanePos[1] - c.getCarPic().getY(), 2));
+            int[] carGridPos = Helper.toGrid(c.getCarPic().getX(), c.getCarPic().getY());
 
-            float minDistance = (float)((Math.random() * 500) + 600);
+            int colDiff = Math.abs(randomLane.getStartCol() - carGridPos[0]);
+            int rowDiff = Math.abs(randomLane.getStartRow() - c.getSavedStartRow());
 
-            if(distanceXY < 950 && c.getSavedStartRow() == randomLane.getStartRow())
+
+            if(colDiff < 4 && rowDiff == 0 )
                 return;
         }
 

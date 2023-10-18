@@ -5,13 +5,16 @@ import Game.Isometric.IsoCar;
 import Game.Isometric.IsoGrid;
 
 public enum Lanes{
-    FIRST(4, MovementDir.LEFT),
-    SECOND(5, MovementDir.RIGHT);
-    /*
-    THIRD(8, MovementDir.LEFT),
-    FOURTH(9, MovementDir.RIGHT),
+    FIRST(2, MovementDir.LEFT),
+    SECOND(3, MovementDir.RIGHT),
+    THIRD(6, MovementDir.LEFT),
+    FOURTH(7, MovementDir.RIGHT),
     FIFTH(10, MovementDir.LEFT),
-    SIXTH(11, MovementDir.RIGHT);*/
+    SIXTH(11, MovementDir.RIGHT),
+    SEVEN(14, MovementDir.LEFT),
+    EIGHT(15, MovementDir.RIGHT),
+    NINE(18, MovementDir.RIGHT),
+    TEN(19, MovementDir.RIGHT);
 
     private final int rowNumber;
     private final MovementDir moveDir;

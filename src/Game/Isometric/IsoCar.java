@@ -1,7 +1,9 @@
 package Game.Isometric;
 
 import Game.Actors.BaseActor;
+import Game.Actors.Player.Player;
 import Game.MovementDir;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /** Used to create a car */
@@ -21,6 +23,23 @@ public class IsoCar{
         carPic.draw();
     }
 
+    public boolean checkCollision(Player player) {
+        int carX = carPic.getX();
+        int carY = carPic.getY();
+        int carWidth = carPic.getX();
+        int carHeight = carPic.getY();
+        int playerX = player.getPlayerPic().getX();
+        int playerY = player.getPlayerPic().getY();
+        int playerWidth = player.getPlayerPic().getWidth();
+        int playerHeight = player.getPlayerPic().getHeight();
+
+        int[] getCarPos = Helper.toGrid(carX, carY);
+        int[] getPlayerPos = Helper.toGrid(playerX, playerY);
+
+        return getCarPos[0] == getPlayerPos[0] && getCarPos[1] == getPlayerPos[1];
+    }
+
+
     public void showCar(){
         this.carPic.draw();
     }
@@ -34,7 +53,7 @@ public class IsoCar{
     }
 
     public void move(){
-        double[] movement = this.moveDir.equals(MovementDir.RIGHT) ?  Helper.translateMovement(this.carPic, MovementDir.RIGHT, 25) : Helper.translateMovement(this.carPic, MovementDir.LEFT, 25);
+        double[] movement = this.moveDir.equals(MovementDir.RIGHT) ?  Helper.translateMovement(this.carPic, MovementDir.RIGHT, 10) : Helper.translateMovement(this.carPic, MovementDir.LEFT, 10);
         this.carPic.translate(movement[0], movement[1]);
     }
 

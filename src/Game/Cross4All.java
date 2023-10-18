@@ -4,6 +4,7 @@ import Game.Actors.Car;
 import Game.Grid.Grid;
 import Game.Actors.Player.Player;
 import Game.Isometric.*;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 import java.util.LinkedList;
 
@@ -15,50 +16,37 @@ public class Cross4All implements Game{
     private LinkedList<IsoCar> isoCars;
 
     public Cross4All(){
+        Rectangle rect = new Rectangle(10,10, (64 * 25), (64*24) / 1.75);
+        rect.draw();
         this.grid = new Grid();
         new IsoGrid();
         RoadFactory.createRoads();
+
         //this.cars = new LinkedList<Car>();
         this.isoCars = new LinkedList<IsoCar>();
-        this.player = new Player();
+        this.player = new Player(isoCars);
         player.getPlayerController().keyboardInit();
-
     }
 
     public void run() {
+        while (true) { //Todo create game loop logic
 
-        //IsoCar car = new IsoCar(0,4);
-        //IsoCar car2 = new IsoCar(0,0);
-
-        //int[] isoCoords = Helper.toIso(24, 24); //End coordinates for the car
-
-        //End coordinates for row 4 is 42 (24+24 - 4)
-
-        //int[] isoCoords2 = Helper.toIso(24, 8); //End coordinates for the car
-
-        while (true) {
-
-            /*
-            if( (car.getCarPic().getX() + car.getCarPic().getY()) - (car.getCarPic().getWidth() + car.getCarPic().getHeight()) > isoCoords[0] + isoCoords[1]){
-                car.deleteCar();
-                car = new IsoCar(0,4);
-            }
-
-            car.move();
-
-            try {
-                Thread.sleep(50);
-            }
-            catch (Exception e){
-                System.out.println("Add exception");
-            }
-        }*/
-
-
-            while (true) { //Todo create game loop logic
-
-                if (isoCars.size() < 20)
+                if (isoCars.size() < 100) {
                     CarFactory.generateIsoCar(isoCars);
+                }
+
+                //player.getPlayerPic().delete();
+                //player.getPlayerPic().draw();
+
+                for(IsoCar c : isoCars){
+                    if(c.checkCollision(player) || !player.isAlive()) {
+
+                        player.getPlayerPic().delete();
+                        player = new Player(isoCars);
+                    }
+
+                        //System.exit(100);
+                }
 
                 for (int i = 0; i < isoCars.size(); i++) {
 
@@ -67,9 +55,7 @@ public class Cross4All implements Game{
                         isoCars.get(i).deleteCar();
                         isoCars.remove(i);
                     }
-
-                    //FIXME the car going to the right -> is pushing the window direction
-                    if (isoCars.get(i).getMoveDir().equals(MovementDir.LEFT) && !Helper.gridLimitsLeft(isoCars.get(i).getCarPic())) {
+                    else if (isoCars.get(i).getMoveDir().equals(MovementDir.LEFT) && !Helper.gridLimitsLeft(isoCars.get(i).getCarPic())) {
                         isoCars.get(i).deleteCar();
                         isoCars.remove(i);
                     }
@@ -84,35 +70,6 @@ public class Cross4All implements Game{
                 } catch (Exception e) {
                     System.out.println("Add exception");
                 }
-            }
-
-        /*
-        while(false){ //Todo create game loop logic
-
-            if(cars.size() < 20)
-                CarFactory.generateCar(cars);
-
-            for(int i = 0; i < cars.size(); i++){
-
-                //FIXME the car going to the right -> is pushing the window direction
-                if(cars.get(i).getCarPic().getX() < Grid.PADDING || cars.get(i).getCarPic().getX() + cars.get(i).getCarPic().getWidth()  > this.grid.getWidth()) {
-                    cars.get(i).deleteCar();
-                    cars.remove(i);
-                }
-            }
-
-            for(int i = 0; i < cars.size(); i++){
-                cars.get(i).move();
-            }
-
-            try {
-                Thread.sleep(25);
-            }
-            catch (Exception e){
-                System.out.println("Add exception");
-            }
-        }
-        */
         }
     }
 }

@@ -1,5 +1,6 @@
 package Game.Actors.Player;
 
+import Game.Isometric.IsoCar;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -9,6 +10,14 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
  * Used to handle the input
  */
 public class Controller implements KeyboardHandler {
+
+    private Player playerOwner;
+    private boolean canMove;
+
+    public Controller(Player playerOwner){
+        this.playerOwner = playerOwner;
+        this.canMove = true;
+    }
 
     public void keyboardInit() {
         Keyboard keyboard = new Keyboard(this);
@@ -29,32 +38,49 @@ public class Controller implements KeyboardHandler {
         upKeyPressed.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         upKeyPressed.setKey(KeyboardEvent.KEY_UP);
 
+        KeyboardEvent upKeyReleased = new KeyboardEvent();
+        upKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        upKeyReleased.setKey(KeyboardEvent.KEY_UP);
+
         keyboard.addEventListener(rightKeyPressed);
         keyboard.addEventListener(leftKeyPressed);
         keyboard.addEventListener(downKeyPressed);
         keyboard.addEventListener(upKeyPressed);
+
+        //Releases
+        keyboard.addEventListener(upKeyReleased);
     }
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-        switch (keyboardEvent.getKey()) {
-            case KeyboardEvent.KEY_LEFT:
-                Player.moveLeft();
-                break;
-            case KeyboardEvent.KEY_RIGHT:
-                Player.moveRight();
-                break;
-            case KeyboardEvent.KEY_UP:
-                Player.moveUp();
-                break;
-            case KeyboardEvent.KEY_DOWN:
-                Player.moveDown();
-                break;
+
+        if(canMove) {
+            switch (keyboardEvent.getKey()) {
+                case KeyboardEvent.KEY_LEFT:
+                    Player.moveLeft();
+                    break;
+                case KeyboardEvent.KEY_RIGHT:
+                    Player.moveRight();
+                    break;
+                case KeyboardEvent.KEY_UP:
+                    Player.moveUp();
+                    break;
+                case KeyboardEvent.KEY_DOWN:
+                    Player.moveDown();
+                    break;
+            }
+
+            for (IsoCar c : playerOwner.getCarList()) {
+                if (c.checkCollision(playerOwner)) {
+                    playerOwner.setAlive(false);
+                }
+            }
+            canMove = false;
         }
     }
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
-
+        canMove = true;
     }
 }

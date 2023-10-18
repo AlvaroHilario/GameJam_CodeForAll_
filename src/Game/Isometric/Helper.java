@@ -17,7 +17,7 @@ public class Helper {
         int i = (x - y) * TILE_WIDTH_HALF;
         int j = (x + y) * TILE_HEIGHT_QUARTER;
 
-        i += 800-TILE_WIDTH_HALF;
+        i += 810-TILE_WIDTH_HALF;
         j+=50;
 
         return new int[]{i,j};
@@ -25,7 +25,7 @@ public class Helper {
 
     public static int[] toGrid(double i, double j){
 
-        i-=800;
+        i-=810;
         j-=50;
 
         double tx = Math.ceil(((i / TILE_WIDTH_HALF) + (j / TILE_HEIGHT_QUARTER))/2);
@@ -76,30 +76,59 @@ public class Helper {
     }
 
     public static boolean gridLimitsRight(Picture pic){
-        int[] isoCoords = Helper.toIso(IsoGrid.COLS, IsoGrid.ROWS);
-        int[] gridPos = Helper.toGrid(pic.getX(), pic.getY());
-        int[] isoCoord2s = Helper.toIso((IsoGrid.COLS + IsoGrid.ROWS) - gridPos[0], 0);
-        return isoCoords[0] + isoCoords[1] < isoCoord2s[0];
+        int[] gridPos = Helper.toGrid(pic.getX() + pic.getWidth(), pic.getY() + pic.getHeight());
+        return gridPos[0] < IsoGrid.COLS - 1 && gridPos[1] < IsoGrid.COLS - 1;
     }
 
     public static boolean gridLimitsLeft(Picture pic){
-        int[] isoCoords = Helper.toIso(0, 0); // Assuming the leftmost grid coordinates are (0, 0)
         int[] gridPos = Helper.toGrid(pic.getX() + pic.getWidth(), pic.getY() + 15);
-
-        return gridPos[0] > -1 && gridPos[1] > -1;
+        return gridPos[0] > 1 && gridPos[1] > 1;
     }
 
     public static boolean gridLimitsDown(Picture pic){
-        int[] isoCoords = Helper.toIso(0, 24); // Assuming the leftmost grid coordinates are (0, 0)
         int[] gridPos = Helper.toGrid(pic.getX(), pic.getY() + pic.getHeight());
-
-        return gridPos[0] > -1 && gridPos[1] < 24;
+        return gridPos[0] > 1 && gridPos[1] < IsoGrid.ROWS - 1;
     }
 
     public static boolean gridLimitsUp(Picture pic){
-        int[] isoCoords = Helper.toIso(0, 0); // Assuming the leftmost grid coordinates are (0, 0)
-        int[] gridPos = Helper.toGrid(pic.getX(), pic.getY() - 10);
+        int[] gridPos = Helper.toGrid(pic.getX() + pic.getWidth(), pic.getY() + pic.getHeight());
+        return gridPos[0] > 1 && gridPos[1] > 1;
+    }
 
+    public static boolean gridLimitsRight(Picture pic, int speed){
+
+        double[] newGridPos = Helper.translateMovement(pic, MovementDir.RIGHT, speed);
+
+        int[] gridPos = Helper.toGrid(pic.getX() + newGridPos[0] + pic.getWidth(), pic.getY() + newGridPos[1] + pic.getHeight());
+        return gridPos[0] < IsoGrid.COLS - 1 && gridPos[1] < IsoGrid.COLS - 1;
+    }
+
+    public static boolean gridLimitsLeft(Picture pic, int speed){
+
+        double[] newGridPos = Helper.translateMovement(pic, MovementDir.LEFT, speed);
+
+
+        int[] gridPos = Helper.toGrid(pic.getX() + newGridPos[0]+ pic.getWidth(), pic.getY() + newGridPos[1]);
+        return gridPos[0] > -1 && gridPos[1] >-1;
+    }
+
+    public static boolean gridLimitsDown(Picture pic, int speed){
+
+        double[] newGridPos = Helper.translateMovement(pic, MovementDir.DOWN, speed);
+
+
+        int[] gridPos = Helper.toGrid(pic.getX() + newGridPos[0], pic.getY() + newGridPos[1] + pic.getHeight());
+        return gridPos[0] > -1 && gridPos[1] < IsoGrid.ROWS - 1;
+    }
+
+    public static boolean gridLimitsUp(Picture pic, int speed){
+
+        double[] newGridPos = Helper.translateMovement(pic, MovementDir.UP, speed);
+
+
+        int[] gridPos = Helper.toGrid(pic.getX() + newGridPos[0], pic.getY() + newGridPos[1] - 10);
         return gridPos[0] > -1 && gridPos[1] > -1;
     }
+
+
 }
