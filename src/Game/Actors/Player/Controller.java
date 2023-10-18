@@ -42,6 +42,20 @@ public class Controller implements KeyboardHandler {
         upKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         upKeyReleased.setKey(KeyboardEvent.KEY_UP);
 
+        KeyboardEvent rightKeyReleased = new KeyboardEvent();
+        rightKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        rightKeyReleased.setKey(KeyboardEvent.KEY_RIGHT);
+
+        KeyboardEvent leftKeyReleased = new KeyboardEvent();
+        leftKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        leftKeyReleased.setKey(KeyboardEvent.KEY_LEFT);
+
+        KeyboardEvent downKeyReleased = new KeyboardEvent();
+        downKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        downKeyReleased.setKey(KeyboardEvent.KEY_DOWN);
+
+
+
         keyboard.addEventListener(rightKeyPressed);
         keyboard.addEventListener(leftKeyPressed);
         keyboard.addEventListener(downKeyPressed);
@@ -49,6 +63,9 @@ public class Controller implements KeyboardHandler {
 
         //Releases
         keyboard.addEventListener(upKeyReleased);
+        keyboard.addEventListener(downKeyReleased);
+        keyboard.addEventListener(leftKeyReleased);
+        keyboard.addEventListener(rightKeyReleased);
     }
 
     @Override
