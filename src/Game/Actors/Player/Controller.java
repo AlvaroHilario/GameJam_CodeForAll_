@@ -38,33 +38,26 @@ public class Controller implements KeyboardHandler {
         upKeyPressed.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         upKeyPressed.setKey(KeyboardEvent.KEY_UP);
 
-        keyboard.addEventListener(rightKeyPressed);
-        keyboard.addEventListener(leftKeyPressed);
-        keyboard.addEventListener(downKeyPressed);
-        keyboard.addEventListener(upKeyPressed);
-
-        //Releases
         KeyboardEvent upKeyReleased = new KeyboardEvent();
         upKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         upKeyReleased.setKey(KeyboardEvent.KEY_UP);
-
-        KeyboardEvent downKeyReleased = new KeyboardEvent();
-        downKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        downKeyReleased.setKey(KeyboardEvent.KEY_DOWN);
-
-        KeyboardEvent leftKeyReleased = new KeyboardEvent();
-        leftKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        leftKeyReleased.setKey(KeyboardEvent.KEY_LEFT);
 
         KeyboardEvent rightKeyReleased = new KeyboardEvent();
         rightKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         rightKeyReleased.setKey(KeyboardEvent.KEY_RIGHT);
 
+        KeyboardEvent leftKeyReleased = new KeyboardEvent();
+        leftKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        leftKeyReleased.setKey(KeyboardEvent.KEY_LEFT);
 
-        keyboard.addEventListener(upKeyReleased);
-        keyboard.addEventListener(downKeyPressed);
-        keyboard.addEventListener(leftKeyPressed);
+        KeyboardEvent downKeyReleased = new KeyboardEvent();
+        downKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        downKeyReleased.setKey(KeyboardEvent.KEY_DOWN);
+
         keyboard.addEventListener(rightKeyPressed);
+        keyboard.addEventListener(leftKeyPressed);
+        keyboard.addEventListener(downKeyPressed);
+        keyboard.addEventListener(upKeyPressed);
     }
 
     @Override
