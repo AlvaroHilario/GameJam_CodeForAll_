@@ -26,17 +26,24 @@ public class IsoCar{
     public boolean checkCollision(Player player) {
         int carX = carPic.getX();
         int carY = carPic.getY();
-        int carWidth = carPic.getX();
-        int carHeight = carPic.getY();
+        double carWidth = carPic.getWidth();
+        int carHeight = carPic.getHeight();
         int playerX = player.getPlayerPic().getX();
         int playerY = player.getPlayerPic().getY();
-        int playerWidth = player.getPlayerPic().getWidth();
-        int playerHeight = player.getPlayerPic().getHeight();
+        int playerWidth = player.getPlayerPic().getWidth() / 2;
+        int playerHeight = player.getPlayerPic().getHeight() / 2;
+        double playerMiddleX = playerX + playerWidth;
+        double playerMiddleY = playerY + playerHeight;
 
-        int[] getCarPos = Helper.toGrid(carX, carY);
-        int[] getPlayerPos = Helper.toGrid(playerX, playerY);
+        double i = carX * 1.25;
+        double j = carY * 0.75;
 
-        return getCarPos[0] == getPlayerPos[0] && getCarPos[1] == getPlayerPos[1];
+        double finalCarX = (carX + carWidth/2) - 15;
+        double finalCarY = (carY + carHeight / 2) - 15;
+        double finalWidthX = carWidth/2;
+        double finalHeightY = carHeight /2;
+
+        return playerMiddleX > finalCarX &&  playerMiddleY> finalCarY && playerMiddleX < finalWidthX && playerMiddleY < finalHeightY;
     }
 
 

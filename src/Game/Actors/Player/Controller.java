@@ -38,21 +38,43 @@ public class Controller implements KeyboardHandler {
         upKeyPressed.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         upKeyPressed.setKey(KeyboardEvent.KEY_UP);
 
-        KeyboardEvent upKeyReleased = new KeyboardEvent();
-        upKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        upKeyReleased.setKey(KeyboardEvent.KEY_UP);
-
         keyboard.addEventListener(rightKeyPressed);
         keyboard.addEventListener(leftKeyPressed);
         keyboard.addEventListener(downKeyPressed);
         keyboard.addEventListener(upKeyPressed);
 
         //Releases
+        KeyboardEvent upKeyReleased = new KeyboardEvent();
+        upKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        upKeyReleased.setKey(KeyboardEvent.KEY_UP);
+
+        KeyboardEvent downKeyReleased = new KeyboardEvent();
+        downKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        downKeyReleased.setKey(KeyboardEvent.KEY_DOWN);
+
+        KeyboardEvent leftKeyReleased = new KeyboardEvent();
+        leftKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        leftKeyReleased.setKey(KeyboardEvent.KEY_LEFT);
+
+        KeyboardEvent rightKeyReleased = new KeyboardEvent();
+        rightKeyReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        rightKeyReleased.setKey(KeyboardEvent.KEY_RIGHT);
+
+
         keyboard.addEventListener(upKeyReleased);
+        keyboard.addEventListener(downKeyPressed);
+        keyboard.addEventListener(leftKeyPressed);
+        keyboard.addEventListener(rightKeyPressed);
     }
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
+
+        for (IsoCar c : playerOwner.getCarList()) {
+            if (c.checkCollision(playerOwner)) {
+                playerOwner.setAlive(false);
+            }
+        }
 
         if(canMove) {
             switch (keyboardEvent.getKey()) {

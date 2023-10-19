@@ -39,7 +39,7 @@ public class Cross4All implements Game{
                 //player.getPlayerPic().draw();
 
                 for(IsoCar c : isoCars){
-                    if(c.checkCollision(player) || !player.isAlive()) {
+                    if( c.checkCollision(player) || !player.isAlive()) {
 
                         player.getPlayerPic().delete();
                         player = new Player(isoCars);
