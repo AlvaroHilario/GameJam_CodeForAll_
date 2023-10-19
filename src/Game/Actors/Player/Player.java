@@ -21,7 +21,7 @@ public class Player extends BaseActor {
 
     private static Picture playerPic; //This is a source of errors
     private final Controller playerController;
-    private static int playerSpeed = 32;
+    private static int playerSpeed = 64;
     private LinkedList<IsoCar> carList;
     private boolean isAlive;
 

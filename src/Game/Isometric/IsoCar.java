@@ -24,26 +24,19 @@ public class IsoCar{
     }
 
     public boolean checkCollision(Player player) {
-        int carX = carPic.getX();
-        int carY = carPic.getY();
         double carWidth = carPic.getWidth();
-        int carHeight = carPic.getHeight();
-        int playerX = player.getPlayerPic().getX();
-        int playerY = player.getPlayerPic().getY();
-        int playerWidth = player.getPlayerPic().getWidth() / 2;
-        int playerHeight = player.getPlayerPic().getHeight() / 2;
-        double playerMiddleX = playerX + playerWidth;
-        double playerMiddleY = playerY + playerHeight;
+        double carHeight = carPic.getHeight();
+        double playerWidth = player.getPlayerPic().getWidth();
+        double playerHeight = player.getPlayerPic().getHeight();
+        double playerMiddleX = player.getPlayerPic().getX() + playerWidth / 2;
+        double playerMiddleY = player.getPlayerPic().getY() + playerHeight / 1.25;
 
-        double i = carX * 1.25;
-        double j = carY * 0.75;
+        double finalCarX = (carPic.getX() + carWidth/2) - 15;
+        double finalCarY = (carPic.getY() + carHeight / 2) - 15;
+        double finalWidthX = finalCarX + carWidth/2;
+        double finalHeightY = finalCarY + carHeight /2;
 
-        double finalCarX = (carX + carWidth/2) - 15;
-        double finalCarY = (carY + carHeight / 2) - 15;
-        double finalWidthX = carWidth/2;
-        double finalHeightY = carHeight /2;
-
-        return playerMiddleX > finalCarX &&  playerMiddleY> finalCarY && playerMiddleX < finalWidthX && playerMiddleY < finalHeightY;
+        return playerMiddleX > finalCarX &&  playerMiddleY > finalCarY && playerMiddleX < finalWidthX && playerMiddleY < finalHeightY;
     }
 
 

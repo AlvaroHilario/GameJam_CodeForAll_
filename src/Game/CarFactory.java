@@ -41,7 +41,7 @@ public class CarFactory {
 
         for(IsoCar c : cars){
 
-            int[] lanePos = Helper.toIso(randomLane.getStartCol(), randomLane.getStartCol());
+            int[] lanePos = Helper.toIso(randomLane.getStartCol(), randomLane.getStartRow());
 
             int[] carGridPos = Helper.toGrid(c.getCarPic().getX(), c.getCarPic().getY());
 
