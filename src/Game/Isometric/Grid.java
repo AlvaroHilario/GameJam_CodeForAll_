@@ -1,5 +1,6 @@
 package Game.Isometric;
 
+import Game.Lanes;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.awt.*;
@@ -31,7 +32,17 @@ public class Grid { //Maybe we could extend from Rectangle
     }
 
     public String getTileImage(int cols, int rows){
-        return cols>21 ? cols==23 ? "src/resources/beach.png" : "src/resources/beachSand.png": "src/resources/grass.png";
+    return cols>21 ? cols==23 ? "src/resources/beach.png" : "src/resources/beachSand.png": "src/resources/grass.png";
+    }
+
+    public int getRowsOffsets(int cols, int rows){
+        if(rows == 0 && cols < 22)
+            for(Lanes l : Lanes.values()){
+
+                if(l.getStartRow() == cols)
+                    return 0;
+            }
+        return 15;
     }
 
     public int getCols() {
