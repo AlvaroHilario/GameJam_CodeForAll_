@@ -80,18 +80,22 @@ public class Controller implements KeyboardHandler {
         }
 
         if(canMove) {
+
+            if(playerOwner == null)
+                return;
+
             switch (keyboardEvent.getKey()) {
                 case KeyboardEvent.KEY_LEFT:
-                    Player.moveLeft();
+                    playerOwner.moveLeft();
                     break;
                 case KeyboardEvent.KEY_RIGHT:
-                    Player.moveRight();
+                    playerOwner.moveRight();
                     break;
                 case KeyboardEvent.KEY_UP:
-                    Player.moveUp();
+                    playerOwner.moveUp();
                     break;
                 case KeyboardEvent.KEY_DOWN:
-                    Player.moveDown();
+                    playerOwner.moveDown();
                     break;
             }
 

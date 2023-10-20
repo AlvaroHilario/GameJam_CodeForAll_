@@ -3,6 +3,7 @@ package Game.Isometric;
 import Game.Actors.BaseActor;
 import Game.Actors.Player.Player;
 import Game.MovementDir;
+import org.academiadecodigo.simplegraphics.graphics.Line;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 

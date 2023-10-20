@@ -1,17 +1,12 @@
 package Game.Actors.Player;
 
 import Game.Actors.BaseActor;
-import Game.Grid.Grid;
 import Game.Isometric.Helper;
 import Game.Isometric.IsoCar;
-import Game.Isometric.IsoGrid;
+import Game.Isometric.Grid;
 import Game.MovementDir;
-import Game.Util;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-import java.awt.*;
 import java.util.LinkedList;
 
 /**
@@ -34,10 +29,7 @@ public class Player extends BaseActor {
     }
 
     private void showPlayer() {
-        int yInitialPosition = 362;
-        int xInitialPosition = 250;
-
-        int[] initialPos = Helper.toIso(IsoGrid.COLS / 2,IsoGrid.ROWS - 2);
+        int[] initialPos = Helper.toIso(Grid.COLS / 2, Grid.ROWS - 2);
 
         String playerImage = getImagePlayer();
         playerPic = new Picture(initialPos[0], initialPos[1], playerImage);
@@ -52,7 +44,8 @@ public class Player extends BaseActor {
         return "src/resources/player.png";
     }
 
-    public static void moveUp() {
+
+    public void moveUp() {
         if (Helper.gridLimitsUp(playerPic, playerSpeed)) {
             double[] diff = Helper.translateMovement(playerPic, MovementDir.UP, playerSpeed);
             playerPic.translate(diff[0], diff[1]);
@@ -63,7 +56,7 @@ public class Player extends BaseActor {
         return playerPic;
     }
 
-    public static void moveDown() {
+    public void moveDown() {
         if (Helper.gridLimitsDown(playerPic, playerSpeed)) {
             double[] diff = Helper.translateMovement(playerPic, MovementDir.DOWN,playerSpeed);
 
@@ -71,8 +64,7 @@ public class Player extends BaseActor {
         }
     }
 
-    public static void moveLeft() {
-
+    public void moveLeft() {
         if(Helper.gridLimitsLeft(playerPic, playerSpeed)) // Left limit
         {
             double[] diff = Helper.translateMovement(playerPic, MovementDir.LEFT, playerSpeed);
@@ -80,16 +72,11 @@ public class Player extends BaseActor {
         }
     }
 
-    public static void moveRight() {
+    public void moveRight() {
         if(Helper.gridLimitsRight(playerPic, playerSpeed)){
             double[] diff = Helper.translateMovement(playerPic, MovementDir.RIGHT, playerSpeed);
             playerPic.translate(diff[0], diff[1]);
         }
-    }
-
-    @Override
-    public void move() {
-
     }
 
     public LinkedList<IsoCar> getCarList() {
@@ -103,4 +90,5 @@ public class Player extends BaseActor {
     public boolean isAlive() {
         return isAlive;
     }
+
 }

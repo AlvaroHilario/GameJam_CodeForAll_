@@ -1,7 +1,6 @@
 package Game;
 
-import Game.Grid.Grid;
-import Game.Isometric.Helper;
+import Game.Isometric.Grid;
 import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 

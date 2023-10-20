@@ -1,8 +1,6 @@
 package Game;
 
-import Game.Grid.Grid;
-import Game.Isometric.IsoCar;
-import Game.Isometric.IsoGrid;
+import Game.Isometric.Grid;
 
 public enum Lanes{
     FIRST(2, MovementDir.LEFT),
@@ -29,7 +27,7 @@ public enum Lanes{
 
     public int getStartCol(){
         int imageWidth = Util.getImageWidth(CarFactory.getCarImage(moveDir));
-        return this.moveDir.equals(MovementDir.RIGHT) ? 0 : IsoGrid.COLS;
+        return this.moveDir.equals(MovementDir.RIGHT) ? 0 : Grid.COLS;
     }
 
     Lanes(int rowNumber, MovementDir moveDir){

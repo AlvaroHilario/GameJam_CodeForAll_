@@ -5,6 +5,4 @@ public enum MovementDir {
     DOWN,
     LEFT,
     RIGHT;
-
-
 }

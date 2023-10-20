@@ -3,8 +3,6 @@ package Game.Isometric;
 import Game.MovementDir;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-import java.util.Vector;
-
 public class Helper {
     private static int TILE_WIDTH_HALF = 64/2; //ImageWidth estamos a usar 64x64 tiles
     private static int TILE_HEIGHT_HALF = 64/2; //ImageHeight
@@ -19,6 +17,16 @@ public class Helper {
 
         i += 810-TILE_WIDTH_HALF;
         j+=50;
+
+        return new int[]{i,j};
+    }
+
+    public static int[] toIsoAlt(int x, int y, int cellWidth, int cellHeight){
+
+        int i = (x - y) * (cellWidth / 2);
+        int j = (x + y) * (cellHeight/4);
+
+
 
         return new int[]{i,j};
     }
@@ -77,17 +85,17 @@ public class Helper {
 
     public static boolean gridLimitsRight(Picture pic){
         int[] gridPos = Helper.toGrid(pic.getX() + pic.getWidth(), pic.getY() + pic.getHeight());
-        return gridPos[0] < IsoGrid.COLS - 1 && gridPos[1] < IsoGrid.COLS - 1;
+        return gridPos[0] < Grid.COLS - 1 && gridPos[1] < Grid.COLS - 1;
     }
 
     public static boolean gridLimitsLeft(Picture pic){
         int[] gridPos = Helper.toGrid(pic.getX() + pic.getWidth(), pic.getY() + 15);
-        return gridPos[0] > 1 && gridPos[1] > 1;
+        return gridPos[0] > 0 && gridPos[1] > 0;
     }
 
     public static boolean gridLimitsDown(Picture pic){
         int[] gridPos = Helper.toGrid(pic.getX(), pic.getY() + pic.getHeight());
-        return gridPos[0] > 1 && gridPos[1] < IsoGrid.ROWS - 1;
+        return gridPos[0] > 1 && gridPos[1] < Grid.ROWS - 1;
     }
 
     public static boolean gridLimitsUp(Picture pic){
@@ -100,7 +108,7 @@ public class Helper {
         double[] newGridPos = Helper.translateMovement(pic, MovementDir.RIGHT, speed);
 
         int[] gridPos = Helper.toGrid(pic.getX() + newGridPos[0] + pic.getWidth(), pic.getY() + newGridPos[1] + pic.getHeight());
-        return gridPos[0] < IsoGrid.COLS - 1 && gridPos[1] < IsoGrid.COLS - 1;
+        return gridPos[0] < Grid.COLS - 1 && gridPos[1] < Grid.COLS - 1;
     }
 
     public static boolean gridLimitsLeft(Picture pic, int speed){
@@ -118,7 +126,7 @@ public class Helper {
 
 
         int[] gridPos = Helper.toGrid(pic.getX() + newGridPos[0], pic.getY() + newGridPos[1] + pic.getHeight());
-        return gridPos[0] > -1 && gridPos[1] < IsoGrid.ROWS - 1;
+        return gridPos[0] > -1 && gridPos[1] < Grid.ROWS - 1;
     }
 
     public static boolean gridLimitsUp(Picture pic, int speed){
