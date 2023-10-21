@@ -13,16 +13,14 @@ public class IsoCar{
     private Picture carPic;
     private MovementDir moveDir;
     private int savedStartRow;
-    private int carSpeed;
 
-    public IsoCar(int startCol, int startRow, MovementDir moveDir, String carImage, int speed){
-        this.carSpeed = speed;
+    public IsoCar(int startCol, int startRow, MovementDir moveDir){
         this.moveDir = moveDir;
         this.savedStartRow = startRow;
         int[] isoCoords = Helper.toIso(startCol, startRow);
         int fx = isoCoords[0];//
         int fy = isoCoords[1];//
-        this.carPic = new Picture(fx, fy + getImageOffset(), carImage);
+        this.carPic = new Picture(fx, fy + getImageOffset(), getCarImage());
         carPic.draw();
     }
 
@@ -39,13 +37,7 @@ public class IsoCar{
         double finalWidthX = finalCarX + carWidth/2;
         double finalHeightY = finalCarY + carHeight /2;
 
-        //Alternative collision
-        //return playerMiddleX > finalCarX &&  playerMiddleY > finalCarY && playerMiddleX < finalWidthX && playerMiddleY < finalHeightY;
-
-        int[] gridPos = Helper.toGrid(carPic.getX() + carWidth / 2, carPic.getY() + carHeight / 2);
-        int[] gridPosPlayer = Helper.toGrid(playerMiddleX, playerMiddleY);
-
-        return gridPos[0] == gridPosPlayer[0] && gridPos[1] == gridPosPlayer[1];
+        return playerMiddleX > finalCarX &&  playerMiddleY > finalCarY && playerMiddleX < finalWidthX && playerMiddleY < finalHeightY;
     }
 
 
@@ -62,7 +54,7 @@ public class IsoCar{
     }
 
     public void move(){
-        double[] movement = this.moveDir.equals(MovementDir.RIGHT) ?  Helper.translateMovement(this.carPic, MovementDir.RIGHT, carSpeed) : Helper.translateMovement(this.carPic, MovementDir.LEFT, carSpeed);
+        double[] movement = this.moveDir.equals(MovementDir.RIGHT) ?  Helper.translateMovement(this.carPic, MovementDir.RIGHT, 10) : Helper.translateMovement(this.carPic, MovementDir.LEFT, 10);
         this.carPic.translate(movement[0], movement[1]);
     }
 

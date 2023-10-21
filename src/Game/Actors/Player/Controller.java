@@ -1,76 +1,22 @@
 package Game.Actors.Player;
 
-import Game.Isometric.Helper;
 import Game.Isometric.IsoCar;
-import Game.MovementDir;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
 /**
- * Used to handle the input it's a singleton class so we
+ * Used to handle the input
  */
 public class Controller implements KeyboardHandler {
 
-    private static Controller instance;
     private Player playerOwner;
     private boolean canMove;
-    private long canMoveTimeStamp;
-    private boolean freezed;
 
-    private Controller(Player playerOwner){
+    public Controller(Player playerOwner){
         this.playerOwner = playerOwner;
         this.canMove = true;
-        this.canMoveTimeStamp = System.currentTimeMillis() / 1000L;
-        this.freezed = true;
-    }
-
-    private Controller(){
-        keyboardInit();
-        this.canMove = true;
-        this.canMoveTimeStamp = System.currentTimeMillis() / 1000L;
-        this.freezed = true;
-    }
-
-    public static Controller getInstance(){
-        if(instance == null)
-            instance = new Controller();
-
-        return instance;
-    }
-
-    public synchronized void setPlayerOwner(Player playerOwner, boolean freezed) {
-        this.playerOwner = playerOwner;
-        this.canMove = true;
-        this.canMoveTimeStamp = System.currentTimeMillis() / 1000L;
-        this.freezed = freezed;
-    }
-
-    public void resetPlayer(boolean freezed){
-        this.canMove = true;
-        this.canMoveTimeStamp = System.currentTimeMillis() / 1000L;
-        this.freezed = freezed;
-
-        int[] startPos = new int[]{10,10};
-        int[] playerGridPos = Helper.toGrid(playerOwner.getPlayerPic().getX(), playerOwner.getPlayerPic().getY());
-
-        while(playerGridPos[0] != startPos[0]){
-
-            int difference = startPos[0] - playerGridPos[0];
-
-            MovementDir moveDir = difference > 0 ? MovementDir.RIGHT : MovementDir.LEFT;
-            playerOwner.getPlayerPic().translate(1,1);
-
-            playerGridPos = Helper.toGrid(playerOwner.getPlayerPic().getX(), playerOwner.getPlayerPic().getY());
-        }
-
-        while(playerGridPos[1] != startPos[1]){
-            playerOwner.getPlayerPic().translate(1,1);
-
-            playerGridPos = Helper.toGrid(playerOwner.getPlayerPic().getX(), playerOwner.getPlayerPic().getY());
-        }
-
     }
 
     public void keyboardInit() {
@@ -124,25 +70,11 @@ public class Controller implements KeyboardHandler {
         keyboard.addEventListener(rightKeyReleased);
     }
 
-    public void setCanMove(boolean canMove) {
-        this.canMove = canMove;
-    }
-
-    public boolean getCanMove() {
-        return canMove;
-    }
-
     @Override
     public synchronized void keyPressed(KeyboardEvent keyboardEvent) {
     try {
         if (playerOwner == null)
             return;
-
-        if (!playerOwner.isAlive())
-            return;
-
-        if (freezed) //Freeze time four our player
-            freezed = ((System.currentTimeMillis() / 1000L) - canMoveTimeStamp) < 2.5;
 
         for (IsoCar c : playerOwner.getCarList()) {
             if (c.checkCollision(playerOwner)) {
@@ -150,7 +82,10 @@ public class Controller implements KeyboardHandler {
             }
         }
 
-        if (canMove && !freezed) {
+        if(canMove) {
+
+            if(playerOwner == null)
+                return;
 
             switch (keyboardEvent.getKey()) {
                 case KeyboardEvent.KEY_LEFT:
@@ -174,9 +109,6 @@ public class Controller implements KeyboardHandler {
             }
             canMove = false;
         }
-    }catch (Exception e){
-        System.out.println(e);
-    }
     }
 
     @Override

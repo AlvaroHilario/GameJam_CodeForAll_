@@ -8,7 +8,6 @@ import Game.MovementDir;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Used to create our main player
@@ -16,13 +15,14 @@ import java.util.List;
 public class Player extends BaseActor {
 
     private static Picture playerPic; //This is a source of errors
+    private final Controller playerController;
     private static int playerSpeed = 64;
-    private List<IsoCar> carList;
+    private LinkedList<IsoCar> carList;
     private boolean isAlive;
 
-    public Player(List<IsoCar> carList) {
+    public Player(LinkedList<IsoCar> carList) {
         super(48, 3);
-        //this.playerController = new Controller(this);
+        this.playerController = new Controller(this);
         this.carList = carList;
         this.isAlive = true;
         showPlayer();
@@ -36,12 +36,12 @@ public class Player extends BaseActor {
         playerPic.draw();
     }
 
-    //public Controller getPlayerController() {
-      //  return playerController;
-    //}
+    public Controller getPlayerController() {
+        return playerController;
+    }
 
     public String getImagePlayer() {
-        return "src/resources/playerUpR.png";
+        return "src/resources/player.png";
     }
 
 
@@ -52,7 +52,7 @@ public class Player extends BaseActor {
         }
     }
 
-    public Picture getPlayerPic() {
+    public static Picture getPlayerPic() {
         return playerPic;
     }
 
@@ -79,7 +79,7 @@ public class Player extends BaseActor {
         }
     }
 
-    public List<IsoCar> getCarList() {
+    public LinkedList<IsoCar> getCarList() {
         return carList;
     }
 
@@ -90,4 +90,5 @@ public class Player extends BaseActor {
     public boolean isAlive() {
         return isAlive;
     }
+
 }

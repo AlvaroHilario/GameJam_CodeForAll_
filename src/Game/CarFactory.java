@@ -13,11 +13,11 @@ public class CarFactory {
     public static LinkedList<Integer> rightRows;
 
     public static String getCarImage(MovementDir moveDir){
-        CarPictures carPic = CarPictures.values()[(int)(Math.random() * CarPictures.values().length)];
-        return carPic.getCarPic(moveDir);
+        return MovementDir.LEFT.equals(moveDir) ? "src/resources/Roadster_64L.png" : "src/resources/Roadster_64L.png";
     }
 
-    public static void generateIsoCar(List<IsoCar> cars, int carspeed){
+
+    public static void generateIsoCar(LinkedList<IsoCar> cars){
         Lanes randomLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)]; //Generates a random lane position
 
         for(IsoCar c : cars){
@@ -30,48 +30,6 @@ public class CarFactory {
                 return;
         }
 
-        cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir(), CarFactory.getCarImage(randomLane.getMoveDir()), carspeed));
-    }
-
-    public static void generateIsoCar(List<IsoCar> cars, Difficulty difficulty){
-        Lanes randomLane = Lanes.generateRandomLane(difficulty); //Generates a random lane position
-
-        for(IsoCar c : cars){
-            int[] carGridPos = Helper.toGrid(c.getCarPic().getX(), c.getCarPic().getY());
-            int rowDiff = Math.abs(randomLane.getStartRow() - c.getSavedStartRow());
-
-            if(rowDiff != 0)
-                continue;
-
-            int colDiff = Math.abs(randomLane.getStartCol() - carGridPos[0]);
-
-            if(colDiff < 4 || (difficulty.equals(Difficulty.HARD) && colDiff < 1))
-                return;
-        }
-
-        cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir(), CarFactory.getCarImage(randomLane.getMoveDir()), difficulty.getCarSpeed()));
-    }
-
-
-
-    public enum CarPictures{
-        CISTERN("src/resources/Cistern_64L.png", "src/resources/Cistern_64R.png"),
-        FIRETRUCK("src/resources/Firetruck_64L.png", "src/resources/Firetruck_64R.png"),
-        LUXURY("src/resources/Luxury_Car_64L.png", "src/resources/Luxury_Car_64R.png"),
-        PICKUP("src/resources/Pick_up_64L.png", "src/resources/Pick_up_64R.png"),
-        RACING("src/resources/Racing_Car_64L.png", "src/resources/Racing_Car_64R.png"),
-        REGULAR("src/resources/Regular_Car_64L.png", "src/resources/Regular_Car_64R.png"),
-        ROADSTER("src/resources/Roadster_64L.png", "src/resources/Roadster_64R.png");
-
-        private String carPicLeft, carPicRight;
-
-        CarPictures(String carPicLeft, String carPicRight){
-            this.carPicLeft = carPicLeft;
-            this.carPicRight = carPicRight;
-        }
-
-        public String getCarPic(MovementDir moveDir){
-            return MovementDir.LEFT.equals(moveDir) ? this.carPicLeft : this.carPicRight;
-        }
+        cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir()));
     }
 }
