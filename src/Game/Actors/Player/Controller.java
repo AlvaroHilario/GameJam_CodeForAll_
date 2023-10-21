@@ -13,10 +13,14 @@ public class Controller implements KeyboardHandler {
 
     private Player playerOwner;
     private boolean canMove;
+    private long canMoveTimeStamp;
+    private boolean freezed;
 
     public Controller(Player playerOwner){
         this.playerOwner = playerOwner;
-        this.canMove = true;
+        this.canMove = false;
+        this.canMoveTimeStamp = System.currentTimeMillis() / 1000L;
+        this.freezed = true;
     }
 
     public void keyboardInit() {
@@ -70,8 +74,21 @@ public class Controller implements KeyboardHandler {
         keyboard.addEventListener(rightKeyReleased);
     }
 
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
+
+    public boolean getCanMove() {
+        return canMove;
+    }
+
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
+
+        System.out.println((System.currentTimeMillis() / 1000L) - canMoveTimeStamp);
+
+        if(freezed)
+            freezed = ((System.currentTimeMillis() / 1000L) - canMoveTimeStamp ) < 4;
 
         for (IsoCar c : playerOwner.getCarList()) {
             if (c.checkCollision(playerOwner)) {
@@ -79,7 +96,7 @@ public class Controller implements KeyboardHandler {
             }
         }
 
-        if(canMove) {
+        if(canMove && !freezed) {
 
             if(playerOwner == null)
                 return;

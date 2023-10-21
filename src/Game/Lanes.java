@@ -45,6 +45,7 @@ public enum Lanes{
 
         Lanes tempLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)];
 
+        //FIXME Not efficient, it's lagging the game
         while(tempLane.getDifficulty().ordinal() > difficulty.ordinal()){
             tempLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)];
         }

@@ -103,6 +103,17 @@ public class Cross4All implements Game, KeyboardHandler {
                     isoCars.get(i).move();
                 }
 
+                //Check if player has won this round
+                if(  checkPlayerWinCondition()  )  {
+
+                    //Increasing difficulty if the player wins
+                    if(difficulty.ordinal() < Difficulty.values().length)
+                        difficulty = Difficulty.values()[difficulty.ordinal()];
+
+                    scoreCounter++;
+                    newLevel = true;
+                }
+
                 try {
                     Thread.sleep(25);
                 } catch (Exception e) {
@@ -121,9 +132,7 @@ public class Cross4All implements Game, KeyboardHandler {
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-
-        newLevel = true;
-        //System.exit(1);
+        System.exit(1);
     }
 
     @Override
@@ -187,5 +196,16 @@ public class Cross4All implements Game, KeyboardHandler {
         this.isoCars = new LinkedList<IsoCar>();
         this.player = new Player(isoCars);
         this.player.getPlayerController().keyboardInit();
+    }
+
+    public boolean checkPlayerWinCondition(){
+        double playerWidth = player.getPlayerPic().getWidth();
+        double playerHeight = player.getPlayerPic().getHeight();
+        double playerMiddleX = player.getPlayerPic().getX() + playerWidth / 2;
+        double playerMiddleY = player.getPlayerPic().getY() + playerHeight / 1.25;
+
+        int[] gridPosPlayer = Helper.toGrid(playerMiddleX, playerMiddleY);
+
+        return gridPosPlayer[1] < 2;
     }
 }

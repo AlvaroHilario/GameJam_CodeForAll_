@@ -52,7 +52,7 @@ public class Player extends BaseActor {
         }
     }
 
-    public static Picture getPlayerPic() {
+    public Picture getPlayerPic() {
         return playerPic;
     }
 
@@ -90,5 +90,4 @@ public class Player extends BaseActor {
     public boolean isAlive() {
         return isAlive;
     }
-
 }
