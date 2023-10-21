@@ -23,7 +23,7 @@ public class Cross4All implements Game, KeyboardHandler {
     private boolean clicked = false;
     private Grid currentGrid;
     private boolean endGame;
-    private int scoreCounter;
+    private Score scoreboard;
 
     //Level options
     private boolean newLevel;
@@ -50,6 +50,7 @@ public class Cross4All implements Game, KeyboardHandler {
         this.player = new Player(isoCars);
         this.playerController = Controller.getInstance();
         this.playerController.setPlayerOwner(player, true);
+        this.scoreboard = new Score();
         //this.player.getPlayerController().keyboardInit();
     }
 
@@ -81,10 +82,17 @@ public class Cross4All implements Game, KeyboardHandler {
 
                 for(IsoCar c : isoCars){
                     if( c.checkCollision(player) || !player.isAlive()) {
-                        playerController.setPlayerOwner(null, false);
-                        player.getPlayerPic().delete();
-                        player = new Player(isoCars);
-                        playerController.setPlayerOwner(this.player, false);
+
+                        if(difficulty.equals(Difficulty.EASY)) {
+                            playerController.setPlayerOwner(null, false);
+                            player.getPlayerPic().delete();
+                            player = new Player(isoCars);
+                            playerController.setPlayerOwner(this.player, false);
+                        }else{
+                            difficulty = Difficulty.EASY;
+                            newLevel = true;
+                        }
+                        scoreboard.resetScore();
                     }
                 }
 
@@ -111,7 +119,7 @@ public class Cross4All implements Game, KeyboardHandler {
                     if(difficulty.ordinal() < Difficulty.values().length-1)
                         difficulty = Difficulty.values()[difficulty.ordinal() + 1];
 
-                    scoreCounter++;
+                    scoreboard.updateScore();
                     newLevel = true;
                 }
 
@@ -213,7 +221,7 @@ public class Cross4All implements Game, KeyboardHandler {
     }
 
     public synchronized void reDrawPlayer(){
-        player.getPlayerPic().delete();
-        player.getPlayerPic().draw();
+            player.getPlayerPic().delete();
+            player.getPlayerPic().draw();
     }
 }

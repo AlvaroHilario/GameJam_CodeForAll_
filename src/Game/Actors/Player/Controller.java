@@ -142,7 +142,7 @@ public class Controller implements KeyboardHandler {
             return;
 
         if (freezed) //Freeze time four our player
-            freezed = ((System.currentTimeMillis() / 1000L) - canMoveTimeStamp) < 3.5;
+            freezed = ((System.currentTimeMillis() / 1000L) - canMoveTimeStamp) < 2.5;
 
         for (IsoCar c : playerOwner.getCarList()) {
             if (c.checkCollision(playerOwner)) {
