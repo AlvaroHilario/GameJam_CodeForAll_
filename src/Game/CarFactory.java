@@ -17,7 +17,6 @@ public class CarFactory {
         return carPic.getCarPic(moveDir);
     }
 
-
     public static void generateIsoCar(List<IsoCar> cars, int carspeed){
         Lanes randomLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)]; //Generates a random lane position
 
