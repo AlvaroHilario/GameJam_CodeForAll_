@@ -22,8 +22,11 @@ public class Grid { //Maybe we could extend from Rectangle
                     int fx = isoCoords[0];//
                     int fy = isoCoords[1];//
 
-                    String picPath = getTileImage(y,x);
+                    String picPath = getTileImage(y,x); //Old method
 
+                    GridImage tileObj = GridImage.getTile(x,y);
+                    fy += tileObj.getOffset();
+                    picPath = tileObj.getFilename();
 
                     isoGrid[x][y] = new Picture(fx, fy, picPath);
                     isoGrid[x][y].draw();
@@ -32,7 +35,7 @@ public class Grid { //Maybe we could extend from Rectangle
     }
 
     public String getTileImage(int cols, int rows){
-    return cols>21 ? cols==23 ? "src/resources/beach.png" : "src/resources/beachSand.png": "src/resources/grass.png";
+        return cols>21 ? cols==23 ? "src/resources/beach.png" : "src/resources/beachSand.png": "src/resources/grass.png";
     }
 
     public int getRowsOffsets(int cols, int rows){
@@ -76,4 +79,55 @@ public class Grid { //Maybe we could extend from Rectangle
     private int getCellSize(){
         return this.CELLSIZE;
     }
+
+
+    public enum GridImage{
+        GRASS("src/resources/grass.png", 0),
+        BEACH("src/resources/beachSand.png", 0),
+        SEA("src/resources/beach.png", 0),
+        HILL("src/resources/hillS2.png", -15),
+        HILLEND("src/resources/hillSWE.png", -15),
+        SIDEWALK("src/resources/sidewalk.png", -17),
+        SIDETREE("src/resources/sidewalktree.png", -17);
+
+        private String filename;
+        private int offset; //Used to get the hills in the proper place
+        GridImage(String filename, int offset){
+            this.filename = filename;
+            this.offset = offset;
+        }
+
+        public int getOffset() {
+            return offset;
+        }
+
+        public String getFilename() {
+            return filename;
+        }
+
+        public static GridImage getTile(int col, int row){
+
+            if(row == 0)
+                return Math.random() < 0.75 ? SIDEWALK : SIDETREE;
+
+            if(col > 0 && row < 22)
+                return GRASS;
+
+            if(col == 0 && row < 22){ //HILLS
+                for(Lanes l : Lanes.values()){
+
+                    if(row == l.getStartRow())
+                        return GRASS;
+
+                }
+                return row == 21 ? HILLEND : HILL;
+            }
+
+            if(row == 22)
+                return BEACH;
+
+            return SEA;
+        }
+    }
+
 }

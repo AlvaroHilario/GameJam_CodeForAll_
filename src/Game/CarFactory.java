@@ -12,7 +12,8 @@ public class CarFactory {
     public static LinkedList<Integer> rightRows;
 
     public static String getCarImage(MovementDir moveDir){
-        return MovementDir.LEFT.equals(moveDir) ? "src/resources/Roadster_64L.png" : "src/resources/Roadster_64L.png";
+        CarPictures carPic = CarPictures.values()[(int)(Math.random() * CarPictures.values().length)];
+        return carPic.getCarPic(moveDir);
     }
 
 
@@ -29,6 +30,31 @@ public class CarFactory {
                 return;
         }
 
-        cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir()));
+        cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir(), CarFactory.getCarImage(randomLane.getMoveDir())));
     }
+
+
+
+    public enum CarPictures{
+        CISTERN("src/resources/Cistern_64L.png", "src/resources/Cistern_64R.png"),
+        FIRETRUCK("src/resources/Firetruck_64L.png", "src/resources/Firetruck_64R.png"),
+        LUXURY("src/resources/Luxury_Car_64L.png", "src/resources/Luxury_Car_64R.png"),
+        PICKUP("src/resources/Pick_up_64L.png", "src/resources/Pick_up_64R.png"),
+        RACING("src/resources/Racing_Car_64L.png", "src/resources/Racing_Car_64R.png"),
+        REGULAR("src/resources/Regular_Car_64L.png", "src/resources/Regular_Car_64R.png"),
+        ROADSTER("src/resources/Roadster_64L.png", "src/resources/Roadster_64R.png");
+
+        private String carPicLeft, carPicRight;
+
+        CarPictures(String carPicLeft, String carPicRight){
+            this.carPicLeft = carPicLeft;
+            this.carPicRight = carPicRight;
+        }
+
+        public String getCarPic(MovementDir moveDir){
+            return MovementDir.LEFT.equals(moveDir) ? this.carPicLeft : this.carPicRight;
+        }
+    }
+
+
 }

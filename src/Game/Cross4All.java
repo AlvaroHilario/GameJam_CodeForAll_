@@ -33,13 +33,14 @@ public class Cross4All implements Game, KeyboardHandler {
 
         new Grid();
         RoadFactory.createRoads();
+        Hill hills = new Hill();
 
         this.isoCars = new LinkedList<IsoCar>();
         this.player = new Player(isoCars);
         player.getPlayerController().keyboardInit();
 
 
-        Props newProp = new Props(23,23, "src/resources/beach.png");
+        //Props newProp = new Props(23,0, "src/resources/hotel.png");
     }
 
     public void run() {

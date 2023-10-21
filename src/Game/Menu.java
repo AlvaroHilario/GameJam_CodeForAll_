@@ -21,7 +21,7 @@ public class Menu implements MouseHandler {
 
     public Menu(Cross4All cross4All) {
         this.cross4All = cross4All;
-        background = new Picture(Grid.PADDING, Grid.PADDING, "resources/Menu_Background.png");
+        background = new Picture(Grid.PADDING, Grid.PADDING, "resources/Menu_BackgroundA.png");
         background.draw();
         startButton();
     }
