@@ -84,6 +84,9 @@ public class Controller implements KeyboardHandler {
             if(playerOwner == null)
                 return;
 
+            if(!playerOwner.isAlive())
+                return;
+
             switch (keyboardEvent.getKey()) {
                 case KeyboardEvent.KEY_LEFT:
                     playerOwner.moveLeft();

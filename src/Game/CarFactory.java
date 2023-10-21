@@ -17,7 +17,7 @@ public class CarFactory {
     }
 
 
-    public static void generateIsoCar(LinkedList<IsoCar> cars){
+    public static void generateIsoCar(LinkedList<IsoCar> cars, int carspeed){
         Lanes randomLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)]; //Generates a random lane position
 
         for(IsoCar c : cars){
@@ -30,7 +30,23 @@ public class CarFactory {
                 return;
         }
 
-        cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir(), CarFactory.getCarImage(randomLane.getMoveDir())));
+        cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir(), CarFactory.getCarImage(randomLane.getMoveDir()), carspeed));
+    }
+
+    public static void generateIsoCar(LinkedList<IsoCar> cars, Difficulty difficulty){
+        Lanes randomLane = Lanes.generateRandomLane(difficulty); //Generates a random lane position
+
+        for(IsoCar c : cars){
+            int[] carGridPos = Helper.toGrid(c.getCarPic().getX(), c.getCarPic().getY());
+
+            int colDiff = Math.abs(randomLane.getStartCol() - carGridPos[0]);
+            int rowDiff = Math.abs(randomLane.getStartRow() - c.getSavedStartRow());
+
+            if(colDiff < 4 && rowDiff == 0 )
+                return;
+        }
+
+        cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir(), CarFactory.getCarImage(randomLane.getMoveDir()), difficulty.getCarSpeed()));
     }
 
 
@@ -55,6 +71,4 @@ public class CarFactory {
             return MovementDir.LEFT.equals(moveDir) ? this.carPicLeft : this.carPicRight;
         }
     }
-
-
 }

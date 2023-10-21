@@ -1,19 +1,20 @@
 package Game.Isometric;
 
+import Game.Difficulty;
 import Game.Lanes;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.awt.*;
 
 /** Main grid, where we will place our objects */
-public class Grid { //Maybe we could extend from Rectangle
+public class Grid {
     private Picture background;
     public static final int PADDING = 10;
     public static final int CELLSIZE = 128;
     public static final int COLS = 24;
     public static final int ROWS = 24;
     public Picture[][] isoGrid;
-    public Grid(){
+    public Grid(Difficulty difficulty){
         this.isoGrid = new Picture[COLS][ROWS];
 
             for(int x = 0;x<ROWS;x++){
@@ -24,7 +25,7 @@ public class Grid { //Maybe we could extend from Rectangle
 
                     String picPath = getTileImage(y,x); //Old method
 
-                    GridImage tileObj = GridImage.getTile(x,y);
+                    GridImage tileObj = GridImage.getTile(x,y, difficulty);
                     fy += tileObj.getOffset();
                     picPath = tileObj.getFilename();
 
@@ -105,7 +106,7 @@ public class Grid { //Maybe we could extend from Rectangle
             return filename;
         }
 
-        public static GridImage getTile(int col, int row){
+        public static GridImage getTile(int col, int row, Difficulty difficulty){
 
             if(row == 0)
                 return Math.random() < 0.75 ? SIDEWALK : SIDETREE;
@@ -116,7 +117,7 @@ public class Grid { //Maybe we could extend from Rectangle
             if(col == 0 && row < 22){ //HILLS
                 for(Lanes l : Lanes.values()){
 
-                    if(row == l.getStartRow())
+                    if(row == l.getStartRow() && l.getDifficulty().ordinal() <= difficulty.ordinal())
                         return GRASS;
 
                 }

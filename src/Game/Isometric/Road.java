@@ -16,6 +16,14 @@ public class Road {
         RoadLeft roadLeft = new RoadLeft(startRow + 1);
     }
 
+    public Picture[] getLeftRoadGrid() {
+        return leftRoadGrid;
+    }
+
+    public Picture[] getRightRoadGrid() {
+        return rightRoadGrid;
+    }
+
     public class RoadRight {
         public RoadRight(int row) {
             rightRoadGrid = new Picture[ROWS];

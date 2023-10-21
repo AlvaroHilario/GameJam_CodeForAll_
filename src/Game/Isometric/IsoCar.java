@@ -13,8 +13,10 @@ public class IsoCar{
     private Picture carPic;
     private MovementDir moveDir;
     private int savedStartRow;
+    private int carSpeed;
 
-    public IsoCar(int startCol, int startRow, MovementDir moveDir, String carImage){
+    public IsoCar(int startCol, int startRow, MovementDir moveDir, String carImage, int speed){
+        this.carSpeed = speed;
         this.moveDir = moveDir;
         this.savedStartRow = startRow;
         int[] isoCoords = Helper.toIso(startCol, startRow);
@@ -60,7 +62,7 @@ public class IsoCar{
     }
 
     public void move(){
-        double[] movement = this.moveDir.equals(MovementDir.RIGHT) ?  Helper.translateMovement(this.carPic, MovementDir.RIGHT, 10) : Helper.translateMovement(this.carPic, MovementDir.LEFT, 10);
+        double[] movement = this.moveDir.equals(MovementDir.RIGHT) ?  Helper.translateMovement(this.carPic, MovementDir.RIGHT, carSpeed) : Helper.translateMovement(this.carPic, MovementDir.LEFT, carSpeed);
         this.carPic.translate(movement[0], movement[1]);
     }
 
