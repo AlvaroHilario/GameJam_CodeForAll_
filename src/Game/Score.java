@@ -7,10 +7,14 @@ public class Score {
     private int score;
     private Text scoreText;
     public Score(){
-        this.score = 0;
-        this.scoreText = new Text(200, 800, "[ SCORE: " + score + " ]");
-        scoreText.grow(150,50);
-        scoreText.draw();
+        try {
+            this.score = 0;
+            this.scoreText = new Text(125, 850, "| SCORE: " + score + " |");
+            scoreText.grow(100, 35);
+            scoreText.draw();
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     public void updateScore(){

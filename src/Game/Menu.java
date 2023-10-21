@@ -1,15 +1,20 @@
 package Game;
 
 import Game.Isometric.Grid;
+import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.mouse.Mouse;
 import org.academiadecodigo.simplegraphics.mouse.MouseEvent;
 import org.academiadecodigo.simplegraphics.mouse.MouseEventType;
 import org.academiadecodigo.simplegraphics.mouse.MouseHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-public class Menu implements MouseHandler {
+public class Menu implements MouseHandler, KeyboardHandler {
 
     private Mouse mouse;
+    private Keyboard keyboard;
     private Picture imgStartButton;
     private Picture imgQuitButton;
     private Picture imgTitle;
@@ -38,12 +43,29 @@ public class Menu implements MouseHandler {
 
     private void init() {
 
+        //Mouse
+
         mouse = new Mouse(this);
 
         MouseEvent mouseClick = new MouseEvent(0, 0, MouseEventType.MOUSE_CLICKED);
         mouse.addEventListener(MouseEventType.MOUSE_CLICKED);
         MouseEvent mouseMove = new MouseEvent(0, 0, MouseEventType.MOUSE_MOVED);
         mouse.addEventListener(MouseEventType.MOUSE_MOVED);
+
+        //Keyboard
+
+        keyboard = new Keyboard(this);
+
+        KeyboardEvent startGame = new KeyboardEvent();
+        startGame.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        startGame.setKey(KeyboardEvent.KEY_S);
+
+        KeyboardEvent quitGame = new KeyboardEvent();
+        quitGame.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        quitGame.setKey(KeyboardEvent.KEY_Q);
+
+        keyboard.addEventListener(quitGame);
+        keyboard.addEventListener(startGame);
     }
 
     @Override
@@ -54,13 +76,12 @@ public class Menu implements MouseHandler {
                 imgQuitButton.delete();
                 imgStartButton.delete();
                 imgTitle.delete();
-                clicked = true;
-                cross4All.setClicked(true);
+                System.out.println("Starting game.");
                 setTrue();
             }
             if (mouseEvent.getX() >= imgQuitButton.getX() && mouseEvent.getX() <= imgQuitButton.getX() + imgQuitButton.getWidth() &&
                     mouseEvent.getY() - 24 >= imgQuitButton.getY() && mouseEvent.getY() - 24 <= imgQuitButton.getY() + imgQuitButton.getHeight()) {
-                System.out.println("Quited game.");
+                System.out.println("Quiting game.");
                 setTrue();
                 System.exit(1);
             }
@@ -70,6 +91,35 @@ public class Menu implements MouseHandler {
 
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
+    }
+
+
+
+    @Override
+    public void keyPressed(KeyboardEvent keyboardEvent) {
+        if (!clicked) {
+            switch (keyboardEvent.getKey()) {
+                case KeyboardEvent.KEY_S:
+                    imgQuitButton.delete();
+                    imgStartButton.delete();
+                    imgTitle.delete();
+                    clicked = true;
+                    cross4All.setClicked(true);
+                    System.out.println("Starting game.");
+                    setTrue();
+                    break;
+                case KeyboardEvent.KEY_Q:
+                    System.out.println("Quiting game.");
+                    setTrue();
+                    System.exit(1);
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyboardEvent keyboardEvent) {
+
     }
 
     private void setTrue() {

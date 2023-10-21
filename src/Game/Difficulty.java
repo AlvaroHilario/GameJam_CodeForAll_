@@ -4,9 +4,9 @@ package Game;
  * The stats will be maxed to level 5
  * */
     public enum Difficulty{
-        EASY(5, 20),
-        MEDIUM(8,40),
-        HARD(15,80);
+        EASY(5, 25),
+        MEDIUM(8,50),
+        HARD(15,100);
 
         private int carSpeed;
         private int maxCars;

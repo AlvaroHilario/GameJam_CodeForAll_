@@ -41,7 +41,7 @@ public class Player extends BaseActor {
     //}
 
     public String getImagePlayer() {
-        return "src/resources/player.png";
+        return "src/resources/playerUpR.png";
     }
 
 

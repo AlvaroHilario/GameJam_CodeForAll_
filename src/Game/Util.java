@@ -6,7 +6,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Util {
 
-    public static int getImageWidth(String imagePath){
+    public synchronized static int getImageWidth(String imagePath){
         return new Picture(0,0, imagePath).getWidth();
     }
 
