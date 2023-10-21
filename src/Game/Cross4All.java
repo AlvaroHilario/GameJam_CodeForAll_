@@ -1,5 +1,6 @@
 package Game;
 
+import Game.Actors.Player.Controller;
 import Game.Actors.Player.Player;
 import Game.Isometric.*;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -8,13 +9,14 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-
+import java.util.*;
 import java.util.LinkedList;
 
 /** Main game logic */
 public class Cross4All implements Game, KeyboardHandler {
     private Player player;
-    private LinkedList<IsoCar> isoCars;
+    private Controller playerController;
+    private List<IsoCar> isoCars;
     private LinkedList<Road> roads;
     private Hill hills;
     private Keyboard keyboard;
@@ -22,8 +24,6 @@ public class Cross4All implements Game, KeyboardHandler {
     private Grid currentGrid;
     private boolean endGame;
     private int scoreCounter;
-
-
 
     //Level options
     private boolean newLevel;
@@ -43,13 +43,14 @@ public class Cross4All implements Game, KeyboardHandler {
         this.endGame = false;
         this.newLevel = false;
         this.difficulty = Difficulty.EASY;
-
         this.currentGrid = new Grid(difficulty);
         this.roads = RoadFactory.createRoads(difficulty);
         this.hills = new Hill(difficulty);
-        this.isoCars = new LinkedList<IsoCar>();
+        this.isoCars = Collections.synchronizedList(new LinkedList<IsoCar>());
         this.player = new Player(isoCars);
-        this.player.getPlayerController().keyboardInit();
+        this.playerController = Controller.getInstance();
+        this.playerController.setPlayerOwner(player, true);
+        //this.player.getPlayerController().keyboardInit();
     }
 
     public void run() {
@@ -81,9 +82,10 @@ public class Cross4All implements Game, KeyboardHandler {
 
                 for(IsoCar c : isoCars){
                     if( c.checkCollision(player) || !player.isAlive()) {
-
+                        playerController.setPlayerOwner(null, false);
                         player.getPlayerPic().delete();
                         player = new Player(isoCars);
+                        playerController.setPlayerOwner(this.player, false);
                     }
                 }
 
@@ -107,8 +109,8 @@ public class Cross4All implements Game, KeyboardHandler {
                 if(  checkPlayerWinCondition()  )  {
 
                     //Increasing difficulty if the player wins
-                    if(difficulty.ordinal() < Difficulty.values().length)
-                        difficulty = Difficulty.values()[difficulty.ordinal()];
+                    if(difficulty.ordinal() < Difficulty.values().length-1)
+                        difficulty = Difficulty.values()[difficulty.ordinal() + 1];
 
                     scoreCounter++;
                     newLevel = true;
@@ -180,10 +182,11 @@ public class Cross4All implements Game, KeyboardHandler {
 
         //Deletes Cars
         while(!this.isoCars.isEmpty()){
-            isoCars.getFirst().deleteCar();
-            isoCars.removeFirst();
+            isoCars.get(0).deleteCar();
+            isoCars.remove(0);
         }
 
+        playerController.setPlayerOwner(null, true);
         player.setAlive(false);
         player.getPlayerPic().delete();
     }
@@ -191,11 +194,12 @@ public class Cross4All implements Game, KeyboardHandler {
 
     public void createLevel(){
         this.currentGrid = new Grid(difficulty);
-        this.roads = RoadFactory.createRoads();
+        this.roads = RoadFactory.createRoads(difficulty);
         this.hills = new Hill(difficulty);
-        this.isoCars = new LinkedList<IsoCar>();
+        this.isoCars = Collections.synchronizedList(new LinkedList<IsoCar>());
         this.player = new Player(isoCars);
-        this.player.getPlayerController().keyboardInit();
+        playerController.setPlayerOwner(this.player, true);
+        //this.player.getPlayerController().keyboardInit();
     }
 
     public boolean checkPlayerWinCondition(){

@@ -5,6 +5,7 @@ import Game.Isometric.Helper;
 import Game.Isometric.IsoCar;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class CarFactory {
 
@@ -17,7 +18,7 @@ public class CarFactory {
     }
 
 
-    public static void generateIsoCar(LinkedList<IsoCar> cars, int carspeed){
+    public static void generateIsoCar(List<IsoCar> cars, int carspeed){
         Lanes randomLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)]; //Generates a random lane position
 
         for(IsoCar c : cars){
@@ -33,7 +34,7 @@ public class CarFactory {
         cars.add(new IsoCar(randomLane.getStartCol(), randomLane.getStartRow(), randomLane.getMoveDir(), CarFactory.getCarImage(randomLane.getMoveDir()), carspeed));
     }
 
-    public static void generateIsoCar(LinkedList<IsoCar> cars, Difficulty difficulty){
+    public static void generateIsoCar(List<IsoCar> cars, Difficulty difficulty){
         Lanes randomLane = Lanes.generateRandomLane(difficulty); //Generates a random lane position
 
         for(IsoCar c : cars){
