@@ -55,11 +55,8 @@ public class Cross4All implements Game, KeyboardHandler {
 
     public void run() {
         while (!endGame) {
-
-                //Todo Level creation or deletion
                 if(newLevel){
-                    //Testing deleting and loading levels
-
+                    //Deleting and loading levels
                     try{
                         deleteLevel();
                         Thread.sleep(1000);
@@ -79,6 +76,8 @@ public class Cross4All implements Game, KeyboardHandler {
                 if (isoCars.size() < difficulty.getMaxCars()) {
                     CarFactory.generateIsoCar(isoCars, difficulty);
                 }
+
+                reDrawPlayer();
 
                 for(IsoCar c : isoCars){
                     if( c.checkCollision(player) || !player.isAlive()) {
@@ -211,5 +210,10 @@ public class Cross4All implements Game, KeyboardHandler {
         int[] gridPosPlayer = Helper.toGrid(playerMiddleX, playerMiddleY);
 
         return gridPosPlayer[1] < 2;
+    }
+
+    public synchronized void reDrawPlayer(){
+        player.getPlayerPic().delete();
+        player.getPlayerPic().draw();
     }
 }

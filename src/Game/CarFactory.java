@@ -39,11 +39,14 @@ public class CarFactory {
 
         for(IsoCar c : cars){
             int[] carGridPos = Helper.toGrid(c.getCarPic().getX(), c.getCarPic().getY());
-
-            int colDiff = Math.abs(randomLane.getStartCol() - carGridPos[0]);
             int rowDiff = Math.abs(randomLane.getStartRow() - c.getSavedStartRow());
 
-            if(colDiff < 4 && rowDiff == 0 )
+            if(rowDiff != 0)
+                continue;
+
+            int colDiff = Math.abs(randomLane.getStartCol() - carGridPos[0]);
+
+            if(colDiff < 4)
                 return;
         }
 

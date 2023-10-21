@@ -16,7 +16,7 @@ import java.util.List;
 public class Player extends BaseActor {
 
     private static Picture playerPic; //This is a source of errors
-    private static int playerSpeed = 32;
+    private static int playerSpeed = 64;
     private List<IsoCar> carList;
     private boolean isAlive;
 

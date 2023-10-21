@@ -43,13 +43,18 @@ public enum Lanes{
 
     public static Lanes generateRandomLane(Difficulty difficulty){
 
-        Lanes tempLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)];
 
         //FIXME Not efficient, it's lagging the game
-        while(tempLane.getDifficulty().ordinal() > difficulty.ordinal()){
+       /* while(tempLane.getDifficulty().ordinal() > difficulty.ordinal()){
             tempLane = Lanes.values()[(int)(Math.random() * Lanes.values().length)];
-        }
+        }*/
 
-        return tempLane;
+        if(difficulty.equals(Difficulty.EASY)){
+            return Lanes.values()[(int)((Math.random() * (8 - 4)) + 4)];
+        } else if (difficulty.equals(Difficulty.MEDIUM)) {
+            return Lanes.values()[(int)((Math.random() * (8 - 2)) + 2)];
+        }else{
+            return Lanes.values()[(int)(Math.random() * Lanes.values().length)];
+        }
     }
 }

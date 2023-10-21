@@ -134,17 +134,15 @@ public class Controller implements KeyboardHandler {
 
     @Override
     public synchronized void keyPressed(KeyboardEvent keyboardEvent) {
-
-        if(playerOwner == null)
+    try {
+        if (playerOwner == null)
             return;
 
-        if(!playerOwner.isAlive())
+        if (!playerOwner.isAlive())
             return;
 
-        System.out.println(((System.currentTimeMillis() / 1000L) - canMoveTimeStamp ));
-
-        if(freezed) //Freeze time four our player
-            freezed = ((System.currentTimeMillis() / 1000L) - canMoveTimeStamp ) < 3.5;
+        if (freezed) //Freeze time four our player
+            freezed = ((System.currentTimeMillis() / 1000L) - canMoveTimeStamp) < 3.5;
 
         for (IsoCar c : playerOwner.getCarList()) {
             if (c.checkCollision(playerOwner)) {
@@ -152,7 +150,7 @@ public class Controller implements KeyboardHandler {
             }
         }
 
-        if(canMove && !freezed) {
+        if (canMove && !freezed) {
 
             switch (keyboardEvent.getKey()) {
                 case KeyboardEvent.KEY_LEFT:
@@ -176,6 +174,9 @@ public class Controller implements KeyboardHandler {
             }
             canMove = false;
         }
+    }catch (Exception e){
+        System.out.println(e);
+    }
     }
 
     @Override
