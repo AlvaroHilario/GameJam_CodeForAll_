@@ -16,8 +16,8 @@ public class Score {
     public void updateScore(){
         this.score++;
         this.scoreText.delete();
-        Text temp = new Text(200,200, "[ SCORE: " + score + " ]");
-        temp.grow(100,50);
+        Text temp = new Text(200, 800, "[ SCORE: " + score + " ]");
+        temp.grow(150,50);
         temp.draw();
         this.scoreText = temp;
     }
@@ -25,8 +25,8 @@ public class Score {
     public void resetScore(){
         this.score = 0;
         this.scoreText.delete();
-        Text temp = new Text(200,200, "[ SCORE: " + score + " ]");
-        temp.grow(100,50);
+        Text temp = new Text(200,800, "[ SCORE: " + score + " ]");
+        temp.grow(150,50);
         temp.draw();
         this.scoreText = temp;
     }
