@@ -71,7 +71,10 @@ public class Controller implements KeyboardHandler {
     }
 
     @Override
-    public void keyPressed(KeyboardEvent keyboardEvent) {
+    public synchronized void keyPressed(KeyboardEvent keyboardEvent) {
+    try {
+        if (playerOwner == null)
+            return;
 
         for (IsoCar c : playerOwner.getCarList()) {
             if (c.checkCollision(playerOwner)) {
