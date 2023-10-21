@@ -105,11 +105,9 @@ public class Menu implements MouseHandler, KeyboardHandler {
                     imgTitle.delete();
                     clicked = true;
                     cross4All.setClicked(true);
-                    System.out.println("Starting game.");
                     setTrue();
                     break;
                 case KeyboardEvent.KEY_Q:
-                    System.out.println("Quiting game.");
                     setTrue();
                     System.exit(1);
                     break;

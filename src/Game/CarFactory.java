@@ -45,7 +45,7 @@ public class CarFactory {
 
             int colDiff = Math.abs(randomLane.getStartCol() - carGridPos[0]);
 
-            if(colDiff < 4)
+            if(colDiff < 4 || (difficulty.equals(Difficulty.HARD) && colDiff < 1))
                 return;
         }
 

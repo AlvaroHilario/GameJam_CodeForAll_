@@ -6,7 +6,7 @@ package Game;
     public enum Difficulty{
         EASY(5, 25),
         MEDIUM(8,50),
-        HARD(15,100);
+        HARD(12,100);
 
         private int carSpeed;
         private int maxCars;

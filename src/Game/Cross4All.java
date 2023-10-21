@@ -35,7 +35,7 @@ public class Cross4All implements Game, KeyboardHandler {
             try {
                 Thread.sleep(25);
             } catch (Exception e) {
-                System.out.println("Add exception");
+                System.out.println(e);
             }
         }
         init();
@@ -124,7 +124,7 @@ public class Cross4All implements Game, KeyboardHandler {
                 }
 
                 try {
-                    Thread.sleep(25);
+                    Thread.sleep(20);
                 } catch (Exception e) {
                     System.out.println("Add exception");
                 }
