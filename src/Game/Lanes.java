@@ -3,16 +3,16 @@ package Game;
 import Game.Isometric.Grid;
 
 public enum Lanes{
-    FIRST(2, MovementDir.LEFT),
-    SECOND(3, MovementDir.RIGHT),
-    THIRD(6, MovementDir.LEFT),
-    FOURTH(7, MovementDir.RIGHT),
-    FIFTH(10, MovementDir.LEFT),
-    SIXTH(11, MovementDir.RIGHT),
-    SEVEN(14, MovementDir.LEFT),
-    EIGHT(15, MovementDir.RIGHT),
-    NINE(18, MovementDir.RIGHT),
-    TEN(19, MovementDir.RIGHT);
+    FIRST(2, MovementDir.LEFT, Difficulty.HARD),
+    SECOND(3, MovementDir.RIGHT, Difficulty.HARD),
+    THIRD(6, MovementDir.LEFT, Difficulty.MEDIUM),
+    FOURTH(7, MovementDir.RIGHT, Difficulty.MEDIUM),
+    FIFTH(10, MovementDir.LEFT, Difficulty.EASY),
+    SIXTH(11, MovementDir.RIGHT, Difficulty.EASY),
+    SEVEN(14, MovementDir.LEFT, Difficulty.EASY),
+    EIGHT(15, MovementDir.RIGHT, Difficulty.EASY),
+    NINE(18, MovementDir.RIGHT, Difficulty.HARD),
+    TEN(19, MovementDir.RIGHT, Difficulty.HARD);
 
     private final int rowNumber;
     private final MovementDir moveDir;

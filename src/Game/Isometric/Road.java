@@ -16,6 +16,14 @@ public class Road {
         RoadLeft roadLeft = new RoadLeft(startRow + 1);
     }
 
+    public Picture[] getLeftRoadGrid() {
+        return leftRoadGrid;
+    }
+
+    public Picture[] getRightRoadGrid() {
+        return rightRoadGrid;
+    }
+
     public class RoadRight {
         public RoadRight(int row) {
             rightRoadGrid = new Picture[ROWS];
@@ -24,7 +32,7 @@ public class Road {
                 int[] isoCoords = Helper.toIso(x, row);
                 int fx = isoCoords[0];//
                 int fy = isoCoords[1];//
-                rightRoadGrid[x] = new Picture(fx, fy, "src/resources/lotE.png");
+                rightRoadGrid[x] = new Picture(fx, fy, "resources/lotE.png");
                 rightRoadGrid[x].draw();
             }
         }
@@ -38,7 +46,7 @@ public class Road {
                 int[] isoCoords = Helper.toIso(x, row);
                 int fx = isoCoords[0];//
                 int fy = isoCoords[1];//
-                leftRoadGrid[x] = new Picture(fx, fy, "src/resources/lotW.png");
+                leftRoadGrid[x] = new Picture(fx, fy, "resources/lotW.png");
                 leftRoadGrid[x].draw();
             }
         }

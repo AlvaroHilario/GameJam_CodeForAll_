@@ -1,5 +1,6 @@
 package Game;
 
+import Game.Actors.Player.Controller;
 import Game.Actors.Player.Player;
 import Game.Isometric.*;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -7,15 +8,26 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+import java.util.*;
 import java.util.LinkedList;
 
 /** Main game logic */
 public class Cross4All implements Game, KeyboardHandler {
     private Player player;
-    private LinkedList<IsoCar> isoCars;
+    private Controller playerController;
+    private List<IsoCar> isoCars;
+    private LinkedList<Road> roads;
+    private Hill hills;
     private Keyboard keyboard;
     private boolean clicked = false;
+    private Grid currentGrid;
+    private boolean endGame;
+    private Score scoreboard;
+
+    //Level options
+    private boolean newLevel;
+    private Difficulty difficulty;
 
     public Cross4All(){
         Menu menu = new Menu(this);
@@ -23,48 +35,69 @@ public class Cross4All implements Game, KeyboardHandler {
             try {
                 Thread.sleep(25);
             } catch (Exception e) {
-                System.out.println("Add exception");
+                System.out.println(e);
             }
         }
         init();
-        //Rectangle rect = new Rectangle(10,10, (64 * 25), (64*24) / 1.75);
-        //rect.draw();
 
-
-        new Grid();
-        RoadFactory.createRoads();
-
-        this.isoCars = new LinkedList<IsoCar>();
+        this.endGame = false;
+        this.newLevel = false;
+        this.difficulty = Difficulty.EASY;
+        this.currentGrid = new Grid(difficulty);
+        this.roads = RoadFactory.createRoads(difficulty);
+        this.hills = new Hill(difficulty);
+        this.isoCars = Collections.synchronizedList(new LinkedList<IsoCar>());
         this.player = new Player(isoCars);
-        player.getPlayerController().keyboardInit();
-
-
-        Props newProp = new Props(23,23, "src/resources/beach.png");
+        this.playerController = Controller.getInstance();
+        this.playerController.setPlayerOwner(player, true);
+        this.scoreboard = new Score();
+        //this.player.getPlayerController().keyboardInit();
     }
 
     public void run() {
-        while (true) { //Todo create game loop logic
+        while (!endGame) {
+                if(newLevel){
+                    //Deleting and loading levels
+                    try{
+                        deleteLevel();
+                        Thread.sleep(1000);
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
 
-                if (isoCars.size() < 200) {
-                    CarFactory.generateIsoCar(isoCars);
+                    try{
+                        createLevel();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
+                    newLevel = false;
+                    continue;
                 }
 
-                //player.getPlayerPic().delete();
-                //player.getPlayerPic().draw();
+                if (isoCars.size() < difficulty.getMaxCars()) {
+                    CarFactory.generateIsoCar(isoCars, difficulty);
+                }
+
+                reDrawPlayer();
 
                 for(IsoCar c : isoCars){
                     if( c.checkCollision(player) || !player.isAlive()) {
 
-                        player.getPlayerPic().delete();
-                        player = new Player(isoCars);
+                        if(difficulty.equals(Difficulty.EASY)) {
+                            playerController.setPlayerOwner(null, false);
+                            player.getPlayerPic().delete();
+                            player = new Player(isoCars);
+                            playerController.setPlayerOwner(this.player, false);
+                        }else{
+                            difficulty = Difficulty.EASY;
+                            newLevel = true;
+                        }
+                        scoreboard.resetScore();
                     }
-
-                        //System.exit(100);
                 }
 
                 for (int i = 0; i < isoCars.size(); i++) {
 
-                    //FIXME the car going to the right -> is pushing the window direction
                     if (isoCars.get(i).getMoveDir().equals(MovementDir.RIGHT) && !Helper.gridLimitsRight(isoCars.get(i).getCarPic())) {
                         isoCars.get(i).deleteCar();
                         isoCars.remove(i);
@@ -79,8 +112,19 @@ public class Cross4All implements Game, KeyboardHandler {
                     isoCars.get(i).move();
                 }
 
+                //Check if player has won this round
+                if(  checkPlayerWinCondition()  )  {
+
+                    //Increasing difficulty if the player wins
+                    if(difficulty.ordinal() < Difficulty.values().length-1)
+                        difficulty = Difficulty.values()[difficulty.ordinal() + 1];
+
+                    scoreboard.updateScore();
+                    newLevel = true;
+                }
+
                 try {
-                    Thread.sleep(25);
+                    Thread.sleep(20);
                 } catch (Exception e) {
                     System.out.println("Add exception");
                 }
@@ -97,7 +141,6 @@ public class Cross4All implements Game, KeyboardHandler {
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-        System.out.println("Quited game.");
         System.exit(1);
     }
 
@@ -110,4 +153,75 @@ public class Cross4All implements Game, KeyboardHandler {
         this.clicked = clicked;
     }
 
+    //Level functionalities
+    public void deleteLevel() throws Exception{
+
+        //Deletes grid tiles
+        Picture[][] tiles =  currentGrid.isoGrid;
+        for(int i = 0; i < tiles.length; i++){
+            for(int j = 0; j < tiles[i].length; j++){
+                tiles[i][j].delete();
+            }
+        }
+
+        //Deletes the roads
+        while(!this.roads.isEmpty()){
+
+            Picture[] roadTilesLeft = this.roads.getFirst().getLeftRoadGrid();
+            for(int i = 0; i < roadTilesLeft.length; i++){
+                roadTilesLeft[i].delete();
+            }
+
+            Picture[] roadTilesRight = this.roads.getFirst().getRightRoadGrid();
+            for(int i = 0; i < roadTilesRight.length; i++){
+                roadTilesRight[i].delete();
+            }
+
+            this.roads.removeFirst();
+        }
+
+        //Deletes hills
+        LinkedList<Picture> hillsList = this.hills.getHills();
+        while(!hillsList.isEmpty()){
+            hillsList.getFirst().delete();
+            hillsList.removeFirst();
+        }
+
+        //Deletes Cars
+        while(!this.isoCars.isEmpty()){
+            isoCars.get(0).deleteCar();
+            isoCars.remove(0);
+        }
+
+        playerController.setPlayerOwner(null, true);
+        player.setAlive(false);
+        player.getPlayerPic().delete();
+    }
+
+
+    public void createLevel(){
+        this.currentGrid = new Grid(difficulty);
+        this.roads = RoadFactory.createRoads(difficulty);
+        this.hills = new Hill(difficulty);
+        this.isoCars = Collections.synchronizedList(new LinkedList<IsoCar>());
+        this.player = new Player(isoCars);
+        playerController.setPlayerOwner(this.player, true);
+        //this.player.getPlayerController().keyboardInit();
+    }
+
+    public boolean checkPlayerWinCondition(){
+        double playerWidth = player.getPlayerPic().getWidth();
+        double playerHeight = player.getPlayerPic().getHeight();
+        double playerMiddleX = player.getPlayerPic().getX() + playerWidth / 2;
+        double playerMiddleY = player.getPlayerPic().getY() + playerHeight / 1.25;
+
+        int[] gridPosPlayer = Helper.toGrid(playerMiddleX, playerMiddleY);
+
+        return gridPosPlayer[1] < 2;
+    }
+
+    public synchronized void reDrawPlayer(){
+            player.getPlayerPic().delete();
+            player.getPlayerPic().draw();
+    }
 }
