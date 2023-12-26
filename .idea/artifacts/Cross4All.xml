@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Cross4All">
+    <output-path>$PROJECT_DIR$/out/artifacts/Cross4All</output-path>
+    <root id="archive" name="Cross4All.jar">
+      <element id="library" level="project" name="lib" />
+      <element id="module-output" name="Cross4All" />
+    </root>
+  </artifact>
+</component>

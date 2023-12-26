@@ -9,6 +9,8 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+
+import java.applet.AudioClip;
 import java.util.*;
 import java.util.LinkedList;
 
@@ -24,6 +26,8 @@ public class Cross4All implements Game, KeyboardHandler {
     private Grid currentGrid;
     private boolean endGame;
     private Score scoreboard;
+
+    private Sound sound = new Sound();
 
     //Level options
     private boolean newLevel;
@@ -88,10 +92,13 @@ public class Cross4All implements Game, KeyboardHandler {
                             player.getPlayerPic().delete();
                             player = new Player(isoCars);
                             playerController.setPlayerOwner(this.player, false);
+
                         }else{
                             difficulty = Difficulty.EASY;
                             newLevel = true;
+
                         }
+
                         scoreboard.resetScore();
                     }
                 }
@@ -224,4 +231,15 @@ public class Cross4All implements Game, KeyboardHandler {
             player.getPlayerPic().delete();
             player.getPlayerPic().draw();
     }
+
+    public void playMusic(int i){
+            sound.setFile(i);
+            sound.play();
+            sound.loop();
+    }
+
+    public void stopMusic(){
+            sound.stop();
+    }
+
 }
