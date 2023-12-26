@@ -1,1 +1,1 @@
-*Make a cool readme*
+This project was developed during the 3rd week of the Code For All_ bootcamp using Java and the SimpleGraphics library. Our team came together for an intensive and exciting GameJam, and we are thrilled to present our creation: CrossTheRoad
